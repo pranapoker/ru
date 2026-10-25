@@ -15,18 +15,21 @@
 <meta name="copyright" content="All rights reserved" />
 <title>Prana Poker — тренировка логики и интуиции за покерным столом</title>
 <meta name="description" content="Симулятор турнирного стола с ботами PRO и VIP, имитирующими поведение человека. Тренажёр для развития логики и интуиции за покерным столом. Бесплатно, без установки, без регистрации." />
-<link rel="canonical" href="https://pranapoker.thetomtot.workers.dev/" />
+<link rel="canonical" href="https://pranapoker.workers.dev/" />
 <meta property="og:site_name" content="Prana Poker" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="ru_RU" />
 <meta property="og:title" content="Prana Poker — тренировка логики и интуиции за покерным столом" />
 <meta property="og:description" content="Симулятор турнирного стола с ботами PRO и VIP. Бесплатно, без установки, без регистрации." />
-<meta property="og:url" content="https://pranapoker.thetomtot.workers.dev/" />
-<meta property="og:image" content="https://pranapoker.thetomtot.workers.dev/cover.jpg" />
+<meta property="og:url" content="https://pranapoker.workers.dev/" />
+<meta property="og:image" content="https://pranapoker.workers.dev/cover.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Prana Poker — тренировка логики и интуиции" />
 <meta name="twitter:description" content="Симулятор турнирного стола с ботами PRO и VIP." />
-<meta name="twitter:image" content="https://pranapoker.thetomtot.workers.dev/cover.jpg" />
+<meta name="twitter:image" content="https://pranapoker.workers.dev/cover.jpg" />
+<link rel="icon" type="image/jpeg" href="/icon.jpg" />
+<link rel="apple-touch-icon" href="/icon.jpg" />
+<link rel="manifest" href='data:application/manifest+json,{"name":"Prana Poker","short_name":"Prana Poker","display":"standalone","background_color":"%23000000","theme_color":"%23000000","start_url":"/","icons":[{"src":"/icon.jpg","sizes":"192x192","type":"image/jpeg"},{"src":"/icon.jpg","sizes":"512x512","type":"image/jpeg"}]}' />
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
@@ -912,7 +915,9 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   cursor: pointer;
 }
 #table-info .info-row.faded { opacity: 0.45; }
-#table-info .info-row.replay-locked { cursor: default; opacity: 0.45; }
+#table-info .info-row.info-row-locked { cursor: default; }
+#info-blinds-row,
+#info-timer-row { color: inherit; }
 
 .card {
   width: var(--card-w);
@@ -5927,14 +5932,14 @@ const UI = (() => {
         else UI.setHeroTimerIdle();
       }
     }
-    updateBlindRowsReplayLock();
+    updateBlindRowsLock();
   }
 
-  function updateBlindRowsReplayLock() {
-    const lock = !!session.replay.active;
+  function updateBlindRowsLock() {
+    const locked = !!(session.replay.active || session.viewingIndex >= 0);
     [el.infoBlindsRow, el.infoTimerRow].forEach(row => {
       if (!row) return;
-      row.classList.toggle('replay-locked', lock);
+      row.classList.toggle('info-row-locked', locked);
     });
   }
 
@@ -6260,11 +6265,12 @@ const UI = (() => {
     const handleTap = (e) => {
       if (e) { e.preventDefault(); e.stopPropagation(); }
       if (session.replay.active) return;
+      if (session.viewingIndex >= 0) return;
       const now = Date.now();
       if (now - lastTapTs < TAP_COOLDOWN) return;
       lastTapTs = now;
       UI.toggleBlindGrowthPeriod();
-      const snap = session.viewingIndex >= 0 ? session.history[session.viewingIndex] : session.state;
+      const snap = session.state;
       if (snap) UI.updateLevel(snap);
     };
     if (el.infoBlindsRow) {
@@ -7376,7 +7382,6 @@ const UI = (() => {
     UI.setHeroTimerOff();
     UI.setReplayButtonState('pause');
     syncHandsHistoryVisibility();
-    updateBlindRowsReplayLock();
     renderReplayStep();
     scheduleNextReplayStep();
   }
@@ -7441,7 +7446,6 @@ const UI = (() => {
     r.stepIndex = 0;
     window.__replayActive = false;
     UI.setReplayButtonState('replay');
-    updateBlindRowsReplayLock();
     syncHandsHistoryVisibility();
   }
 
@@ -7458,7 +7462,6 @@ const UI = (() => {
     window.__replayActive = false;
     UI.setReplayButtonState('replay');
     if (restoreView && session.viewingIndex >= 0) renderHistorySnapshot();
-    updateBlindRowsReplayLock();
     syncHandsHistoryVisibility();
   }
 
