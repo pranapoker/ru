@@ -613,8 +613,12 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 #quick-percent-list.inactive,
 #quick-percent-list.inactive * { cursor: default !important; }
 
-#hand-nav button { cursor: pointer !important; }
-#hand-nav button:disabled { cursor: default !important; }
+/* Активные кнопки навигации истории и реплея всегда показывают курсор-палец,
+   даже если на родителе #hero-actions стоит класс inactive. Заблокированные
+   кнопки остаются со стрелкой. Это правило специфичнее и стоит ниже, чем
+   общее правило гашения курсора выше. */
+#hero-actions #hand-nav button:not(:disabled) { cursor: pointer !important; }
+#hero-actions #hand-nav button:disabled { cursor: default !important; }
 
 #table-scene {
   position: absolute;
