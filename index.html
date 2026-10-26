@@ -2164,9 +2164,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   pointer-events: none !important;
 }
 
-/* Фишка баттона не должна приглушаться/затемняться при фолде.
-   Приглушение места при фолде делаем точечно через opacity у детей,
-   а не у самого места — чтобы фишка D всегда оставалась яркой. */
 .seat.folded { opacity: 1 !important; }
 .seat.folded .seat-cards,
 .seat.folded .pos-row,
@@ -2199,7 +2196,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     padding-bottom: 1px;
     box-sizing: border-box;
   }
-  /* Десктоп: фишка баттона у всех, кроме героя — отодвинута от карт на 4px и опущена на 8px */
   .seat.left .dealer-chip {
     right: calc(clamp(-26px, -3.4vmin, -22px) - 10px - 4px) !important;
     top: calc(28px + 8px) !important;
@@ -2209,13 +2205,17 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     left: calc(clamp(-26px, -3.4vmin, -22px) - 10px - 4px) !important;
     top: calc(28px + 8px) !important;
   }
-  /* Десктоп: бейдж ставки опущен на 4px от бейджа действия */
   .seat .bet-chips {
     bottom: calc(clamp(-54px, -6.6vmin, -48px) - 4px) !important;
   }
-  /* Десктоп: центральный блок борда целиком поднят на 8px вверх */
   #board-area {
     transform: translate(-50%, -50%) translateY(-8px) !important;
+  }
+  /* Десктоп: кнопки фолд/чек/колл в неактивном состоянии имеют ту же тень,
+     что и активном, но приглушённую — это фиксирует геометрию блока с первой отрисовки,
+     чтобы верхняя граница не поднималась на 1-2px при первой активации. */
+  #hero-actions.inactive #hero-buttons button {
+    box-shadow: 0 3px 0 rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1) !important;
   }
 }
 </style>
