@@ -2164,7 +2164,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 @media (min-width: 768px) {
   .seat .hero-timer-wrap,
   .seat .hero-timer-zone {
-    transform: translate(8px, -50%) !important;
+    transform: translate(12px, -50%) !important;
   }
   .seat .hero-timer-wrap .timer-num {
     transform: translateY(-1px);
@@ -2176,6 +2176,20 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     justify-content: center;
     padding-bottom: 1px;
     box-sizing: border-box;
+  }
+  /* Десктоп: фишка баттона у всех, кроме героя — отодвинута от карт на 4px и опущена на 8px */
+  .seat.left .dealer-chip {
+    right: calc(clamp(-26px, -3.4vmin, -22px) - 10px - 4px) !important;
+    top: calc(28px + 8px) !important;
+  }
+  .seat.right .dealer-chip,
+  .seat.top .dealer-chip {
+    left: calc(clamp(-26px, -3.4vmin, -22px) - 10px - 4px) !important;
+    top: calc(28px + 8px) !important;
+  }
+  /* Десктоп: бейдж ставки опущен на 4px от бейджа действия */
+  .seat .bet-chips {
+    bottom: calc(clamp(-54px, -6.6vmin, -48px) - 4px) !important;
   }
 }
 </style>
