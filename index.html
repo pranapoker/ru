@@ -1240,7 +1240,9 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 .seat.active .seat-cards .card {
   box-shadow: 0 0 12px rgba(255,203,43,.7), 0 3px 8px rgba(0,0,0,.7);
 }
-.seat.folded { opacity: .35; }
+.seat.folded .seat-cards .card {
+  opacity: .35;
+}
 
 .seat.winner .seat-cards .card {
   box-shadow: 0 0 14px 3px rgba(255,203,43,.6), 0 3px 8px rgba(0,0,0,.7);
@@ -2161,6 +2163,26 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   cursor: default !important;
   pointer-events: none !important;
 }
+
+/* Фишка баттона не должна приглушаться/затемняться при фолде.
+   Приглушение места при фолде делаем точечно через opacity у детей,
+   а не у самого места — чтобы фишка D всегда оставалась яркой. */
+.seat.folded { opacity: 1 !important; }
+.seat.folded .seat-cards,
+.seat.folded .pos-row,
+.seat.folded .stack-wrap,
+.seat.folded .strat-badge,
+.seat.folded .action-badge,
+.seat.folded .bet-chips,
+.seat.folded .winner-badge,
+.seat.folded .delta-text {
+  opacity: .35 !important;
+}
+.seat.folded .dealer-chip {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
 @media (min-width: 768px) {
   .seat .hero-timer-wrap,
   .seat .hero-timer-zone {
@@ -2191,15 +2213,10 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   .seat .bet-chips {
     bottom: calc(clamp(-54px, -6.6vmin, -48px) - 4px) !important;
   }
-  /* Десктоп: центральный блок борда целиком поднят на 4px вверх */
+  /* Десктоп: центральный блок борда целиком поднят на 8px вверх */
   #board-area {
-    transform: translate(-50%, -50%) translateY(-4px) !important;
+    transform: translate(-50%, -50%) translateY(-8px) !important;
   }
-}
-
-/* Фишка баттона не должна приглушаться при фолде игрока (все устройства) */
-.seat.folded .dealer-chip {
-  opacity: 1 !important;
 }
 </style>
 </head>
