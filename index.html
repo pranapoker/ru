@@ -1003,8 +1003,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 }
 #table-info .info-row.faded { opacity: 0.45; }
 #table-info .info-row.info-row-locked { cursor: default; }
-#info-blinds-row { color: inherit; cursor: default; pointer-events: none; touch-action: auto; }
-#info-timer-row { color: inherit; cursor: pointer; }
+#info-blinds-row { color: inherit; }
+#info-timer-row { color: inherit; }
 
 .card {
   width: var(--card-w);
@@ -1200,8 +1200,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   .seat.left .dealer-chip { right: calc(clamp(-26px, -3.4vmin, -22px) - 10px); }
   .seat.right .dealer-chip,
   .seat.top .dealer-chip { left: calc(clamp(-26px, -3.4vmin, -22px) - 10px); }
-  .seat .hero-timer-wrap,
-  .seat .hero-timer-zone { transform: translate(4px, -50%); }
 }
 
 .seat .stack-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
@@ -2154,6 +2152,20 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   0% { opacity: 1; transform: translate(0, 0) scale(1); }
   70% { opacity: 1; }
   100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
+}
+
+/* ============================================================
+   ФИНАЛЬНЫЕ ПЕРЕОПРЕДЕЛЕНИЯ (стоят последними, перебивают всё)
+   ============================================================ */
+#info-blinds-row {
+  cursor: default !important;
+  pointer-events: none !important;
+}
+@media (min-width: 768px) {
+  .seat .hero-timer-wrap,
+  .seat .hero-timer-zone {
+    transform: translate(8px, -50%) !important;
+  }
 }
 </style>
 </head>
