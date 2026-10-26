@@ -2191,6 +2191,15 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   .seat .bet-chips {
     bottom: calc(clamp(-54px, -6.6vmin, -48px) - 4px) !important;
   }
+  /* Десктоп: центральный блок борда целиком поднят на 4px вверх */
+  #board-area {
+    transform: translate(-50%, -50%) translateY(-4px) !important;
+  }
+}
+
+/* Фишка баттона не должна приглушаться при фолде игрока (все устройства) */
+.seat.folded .dealer-chip {
+  opacity: 1 !important;
 }
 </style>
 </head>
