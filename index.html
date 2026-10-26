@@ -2217,6 +2217,11 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #board-area {
     transform: translate(-50%, -50%) translateY(-8px) !important;
   }
+  /* Десктоп: блок кнопок героя (фолд/чек/колл/рейз) изначально на 1px выше сверху,
+     низ не двигается — убираем скачок верхней границы при первом ходе героя. */
+  #hero-actions {
+    padding-top: 2px !important;
+  }
 }
 </style>
 </head>
