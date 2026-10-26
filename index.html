@@ -2162,9 +2162,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   pointer-events: none !important;
 }
 
-/* Фишка баттона не должна приглушаться/затемняться при фолде.
-   Приглушение места при фолде делаем точечно через opacity у детей,
-   а не у самого места — чтобы фишка D всегда оставалась яркой. */
 .seat.folded { opacity: 1 !important; }
 .seat.folded .seat-cards,
 .seat.folded .pos-row,
@@ -2182,15 +2179,25 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 }
 
 @media (min-width: 768px) {
-  /* Резервируем место под слайдер и кнопки в неактивном состоянии —
-     высота #hero-actions не меняется при активации хода героя,
-     поэтому блок не «растёт вверх» и не подскакивает. */
+  /* Резервируем высоту блока действий в неактивном состоянии — ровно
+     такую же, как в активном. Формула собрана из реальных высот всех
+     дочерних рядов (навигация + слайдер + кнопки + паддинги + gap),
+     через те же clamp()/vmin, что и сами элементы — поэтому высота
+     масштабируется под экран так же, как активная, но не меняется
+     при активации хода героя. Верх блока остаётся на месте → hand-nav
+     не сдвигается → placeTopRoundRow() не даёт скачка дока. */
   #hero-actions {
     min-height: calc(
-      var(--nav-btn) + 3px +
+      var(--nav-btn) +
+      3px +
       18px + 6px +
-      36px + 2px
+      36px +
+      (clamp(3px, 0.5vmin, 5px) * 2) +
+      1px +
+      clamp(3px, 0.5vmin, 5px) +
+      2px
     );
+    contain: layout style;
   }
 
   .seat .hero-timer-wrap,
@@ -2208,7 +2215,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     padding-bottom: 1px;
     box-sizing: border-box;
   }
-  /* Десктоп: фишка баттона у всех, кроме героя — отодвинута от карт на 4px и опущена на 8px */
   .seat.left .dealer-chip {
     right: calc(clamp(-26px, -3.4vmin, -22px) - 10px - 4px) !important;
     top: calc(28px + 8px) !important;
@@ -2218,7 +2224,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     left: calc(clamp(-26px, -3.4vmin, -22px) - 10px - 4px) !important;
     top: calc(28px + 8px) !important;
   }
-  /* Десктоп: бейдж ставки опущен на 4px от бейджа действия */
   .seat .bet-chips {
     bottom: calc(clamp(-54px, -6.6vmin, -48px) - 4px) !important;
   }
