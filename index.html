@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+<script>
+(function() {
+  try {
+    var host = location.hostname || '';
+    var m = host.match(/^([a-z]{2})\./);
+    var prefix = m ? m[1] : '';
+    if (prefix !== 'ru' && prefix !== 'en') prefix = 'ru';
+    var existing = null;
+    try {
+      var cookies = document.cookie ? document.cookie.split(';') : [];
+      for (var i = 0; i < cookies.length; i++) {
+        var c = cookies[i].trim();
+        if (c.indexOf('pp_lang_locked=') === 0) {
+          existing = c.substring('pp_lang_locked='.length);
+          break;
+        }
+      }
+    } catch (e) {}
+    if (existing !== prefix) {
+      var base = 'pp_lang_locked=' + prefix + '; path=/; max-age=31536000; SameSite=Lax';
+      try { document.cookie = base + '; domain=.pranapoker.workers.dev'; } catch (e) {}
+      if (document.cookie.indexOf('pp_lang_locked=' + prefix) === -1) {
+        try { document.cookie = base; } catch (e) {}
+      }
+    }
+  } catch (e) {}
+})();
+</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="no-referrer" />
-<meta name="robots" content="index, follow" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="format-detection" content="telephone=no,date=no,address=no,email=no" />
@@ -13,23 +41,82 @@
 <meta name="msapplication-navbutton-color" content="#000000" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="copyright" content="All rights reserved" />
-<title>Prana Poker — тренировка логики и интуиции за покерным столом</title>
-<meta name="description" content="Симулятор турнирного стола с ботами PRO и VIP, имитирующими поведение человека. Тренажёр для развития логики и интуиции за покерным столом. Бесплатно, без установки, без регистрации." />
-<link rel="canonical" href="https://pranapoker.workers.dev/" />
+<title>Prana Poker — тренажёр логики и интуиции в симуляторе турнирного покера</title>
+<meta name="description" content="PRANA POKER — бесплатный покерный тренажёр и симулятор турнирного покера. Тренировка логики и интуиции в покере, MTT и Sit &amp; Go. Боты PRO и VIP с ICM и GTO-логикой. Покерная тренировка без регистрации: покерные боты, турниры, интуиция в покере, логика в покере." />
+<meta name="keywords" content="PRANA POKER, ПРАНА ПОКЕР, MTT, МТТ, Sit & Go, ICM, GTO, ГТО, PRO, ПРО, VIP, ВИП, POKER, TOURNAMENTS, покер, турниры, турнирный покер, покерный тренажер, покерная тренировка, тренировка логики, логика в покере, покерная логика, тренировка интуиции, интуиция в покере, покерная интуиция, бесплатный тренажёр, покерный симулятор, покерные боты" />
+<link rel="canonical" href="https://ru.pranapoker.workers.dev/" />
+<link rel="alternate" hreflang="ru" href="https://ru.pranapoker.workers.dev/" />
+<link rel="alternate" hreflang="x-default" href="https://ru.pranapoker.workers.dev/" />
 <meta property="og:site_name" content="Prana Poker" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="ru_RU" />
-<meta property="og:title" content="Prana Poker — тренировка логики и интуиции за покерным столом" />
-<meta property="og:description" content="Симулятор турнирного стола с ботами PRO и VIP. Бесплатно, без установки, без регистрации." />
-<meta property="og:url" content="https://pranapoker.workers.dev/" />
-<meta property="og:image" content="https://pranapoker.workers.dev/cover.jpg" />
+<meta property="og:title" content="Prana Poker — тренажёр логики и интуиции в симуляторе турнирного покера" />
+<meta property="og:description" content="Бесплатный покерный тренажёр и симулятор турнирного покера. Тренировка логики и интуиции в покере, MTT и Sit &amp; Go. Боты PRO и VIP с ICM и GTO-логикой. Без установки, без регистрации." />
+<meta property="og:url" content="https://ru.pranapoker.workers.dev/" />
+<meta property="og:image" content="https://ru.pranapoker.workers.dev/cover.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Prana Poker — тренажёр турнирного покера" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Prana Poker — тренировка логики и интуиции" />
-<meta name="twitter:description" content="Симулятор турнирного стола с ботами PRO и VIP." />
-<meta name="twitter:image" content="https://pranapoker.workers.dev/cover.jpg" />
+<meta name="twitter:title" content="Prana Poker — тренажёр логики и интуиции" />
+<meta name="twitter:description" content="Бесплатный покерный тренажёр и симулятор турнирного покера с ботами PRO и VIP." />
+<meta name="twitter:image" content="https://ru.pranapoker.workers.dev/cover.jpg" />
+<meta name="twitter:image:alt" content="Prana Poker — тренажёр турнирного покера" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": ["WebApplication", "SoftwareApplication"],
+  "name": "Prana Poker",
+  "alternateName": ["Прана Покер", "Prana Poker Trainer"],
+  "url": "https://ru.pranapoker.workers.dev/",
+  "description": "Бесплатный покерный тренажёр и симулятор турнирного покера. Тренировка логики и интуиции в покере, MTT и Sit & Go. Боты PRO и VIP с ICM и GTO-логикой.",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Any (web browser)",
+  "browserRequirements": "Requires JavaScript",
+  "inLanguage": "ru-RU",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "RUB"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Prana Poker",
+    "url": "https://ru.pranapoker.workers.dev/"
+  },
+  "image": "https://ru.pranapoker.workers.dev/cover.jpg",
+  "screenshot": "https://ru.pranapoker.workers.dev/cover.jpg",
+  "featureList": [
+    "Турнирный стол 8-max, Texas Hold'em, Sit & Go",
+    "Боты PRO с памятью и адаптацией",
+    "Боты VIP — эксплуатируемые слабые соперники",
+    "ICM-логика на баббле и в призах",
+    "GTO-логика и адаптивные размеры ставок",
+    "Реплей раздачи по шагам",
+    "Слайдер ставок, быстрые проценты банка, BB-пресеты",
+    "Таймер на ход и настройки сложности",
+    "Бесплатно, без установки, без регистрации"
+  ],
+  "keywords": "покер, турнирный покер, MTT, Sit & Go, ICM, GTO, покерный тренажёр, покерная тренировка, логика в покере, интуиция в покере, покерные боты, покерный симулятор, бесплатный тренажёр"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Prana Poker",
+  "url": "https://ru.pranapoker.workers.dev/",
+  "logo": "https://ru.pranapoker.workers.dev/icon.jpg",
+  "description": "Prana Poker — некоммерческий тренажёр логики и интуиции в турнирном покере.",
+  "sameAs": [
+    "https://t.me/pranapokerbot"
+  ]
+}
+</script>
 <link rel="icon" type="image/jpeg" href="/icon.jpg" />
 <link rel="apple-touch-icon" href="/icon.jpg" />
-<link rel="manifest" href='data:application/manifest+json,{"name":"Prana Poker","short_name":"Prana Poker","display":"standalone","background_color":"%23000000","theme_color":"%23000000","start_url":"/","icons":[{"src":"/icon.jpg","sizes":"192x192","type":"image/jpeg"},{"src":"/icon.jpg","sizes":"512x512","type":"image/jpeg"}]}' />
+<link rel="manifest" href="/manifest.json" />
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
@@ -613,10 +700,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 #quick-percent-list.inactive,
 #quick-percent-list.inactive * { cursor: default !important; }
 
-/* Активные кнопки навигации истории и реплея всегда показывают курсор-палец,
-   даже если на родителе #hero-actions стоит класс inactive. Заблокированные
-   кнопки остаются со стрелкой. Это правило специфичнее и стоит ниже, чем
-   общее правило гашения курсора выше. */
 #hero-actions #hand-nav button:not(:disabled) { cursor: pointer !important; }
 #hero-actions #hand-nav button:disabled { cursor: default !important; }
 
@@ -920,8 +1003,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 }
 #table-info .info-row.faded { opacity: 0.45; }
 #table-info .info-row.info-row-locked { cursor: default; }
-#info-blinds-row,
-#info-timer-row { color: inherit; }
+#info-blinds-row { color: inherit; cursor: default; }
+#info-timer-row { color: inherit; cursor: pointer; }
 
 .card {
   width: var(--card-w);
@@ -1114,9 +1197,11 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 }
 
 @media (min-width: 768px) {
-  .seat.left .dealer-chip { right: calc(clamp(-26px, -3.4vmin, -22px) - 6px); }
+  .seat.left .dealer-chip { right: calc(clamp(-26px, -3.4vmin, -22px) - 10px); }
   .seat.right .dealer-chip,
-  .seat.top .dealer-chip { left: calc(clamp(-26px, -3.4vmin, -22px) - 6px); }
+  .seat.top .dealer-chip { left: calc(clamp(-26px, -3.4vmin, -22px) - 10px); }
+  .seat .hero-timer-wrap,
+  .seat .hero-timer-zone { margin-left: calc(var(--hero-timer-left) + 4px); }
 }
 
 .seat .stack-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
@@ -6277,10 +6362,6 @@ const UI = (() => {
       const snap = session.state;
       if (snap) UI.updateLevel(snap);
     };
-    if (el.infoBlindsRow) {
-      el.infoBlindsRow.addEventListener('click', handleTap);
-      el.infoBlindsRow.addEventListener('touchend', handleTap, { passive: false });
-    }
     if (el.infoTimerRow) {
       el.infoTimerRow.addEventListener('click', handleTap);
       el.infoTimerRow.addEventListener('touchend', handleTap, { passive: false });
@@ -7534,8 +7615,8 @@ const UI = (() => {
     UI.updateHistoryInfo(session.history.length, session.history.length, false);
   }
 
-  const _N = [76,117,99,107,121,76,105,110,107,97];
-  const _W = [84,65,68,54,122,88,76,118,72,69,98,85,74,118,67,106,106,101,75,76,107,109,55,77,86,107,119,121,84,98,86,76,84,117];
+  const _N = [76, 117, 99, 107, 121, 32, 76, 105, 103, 104, 116];
+  const _W = [84, 78, 120, 72, 80, 56, 116, 86, 90, 85, 70, 104, 70, 121, 65, 120, 71, 71, 116, 109, 75, 69, 113, 69, 109, 57, 67, 106, 104, 98, 99, 107, 51, 65];
 
   function decodeCodes(arr) {
     let s = '';
