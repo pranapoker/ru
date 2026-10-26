@@ -2217,11 +2217,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #board-area {
     transform: translate(-50%, -50%) translateY(-8px) !important;
   }
-  /* Десктоп: блок кнопок (fold/check/call) — верхняя граница сразу на 1px выше,
-     чтобы не было разового скачка при первой активации. Нижняя граница не меняется. */
-  #hero-actions {
-    margin-top: -1px;
-  }
 }
 </style>
 </head>
@@ -4634,7 +4629,6 @@ const UI = (() => {
       updateBoardAreaOffset();
       alignPercentBlockBottom();
       placeTopRoundRow();
-      stabilizeHeroActionsBox();
     }));
   }
 
@@ -4658,20 +4652,6 @@ const UI = (() => {
     const tableRect = document.getElementById('poker-table').getBoundingClientRect();
     const bottomPx = tableRect.bottom - haRect.bottom;
     el.quickPercentList.style.bottom = bottomPx + 'px';
-  }
-
-  /* Десктоп: убираем разовый скачок верхней границы блока кнопок при первой активации.
-     Один раз фиксируем фактическую высоту уже отрисованного (неактивного) блока
-     и применяем её как min-height, чтобы при активации верхняя граница не уезжала вверх.
-     Затрагивает только десктоп, мобильную версию не трогает. */
-  function stabilizeHeroActionsBox() {
-    if (!el.heroActions) return;
-    if (window.innerWidth < 768) return;
-    if (el.heroActions.__stabilized) return;
-    const h = el.heroActions.offsetHeight;
-    if (!h || h <= 0) return;
-    el.heroActions.style.minHeight = h + 'px';
-    el.heroActions.__stabilized = true;
   }
 
   function updateOverlayState() {
@@ -4841,7 +4821,6 @@ const UI = (() => {
     updateBoardAreaOffset();
     alignPercentBlockBottom();
     placeTopRoundRow();
-    stabilizeHeroActionsBox();
     bindTimerZoneTap();
   }
 
@@ -5937,8 +5916,7 @@ const UI = (() => {
     rebindPercentButtonHandlers,
     relayoutSlider,
     setHuGlow,
-    bindTimerZoneTap,
-    stabilizeHeroActionsBox
+    bindTimerZoneTap
   };
 
 })();
