@@ -1240,9 +1240,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 .seat.active .seat-cards .card {
   box-shadow: 0 0 12px rgba(255,203,43,.7), 0 3px 8px rgba(0,0,0,.7);
 }
-.seat.folded .seat-cards .card {
-  opacity: .35;
-}
+.seat.folded { opacity: .35; }
 
 .seat.winner .seat-cards .card {
   box-shadow: 0 0 14px 3px rgba(255,203,43,.6), 0 3px 8px rgba(0,0,0,.7);
@@ -2184,6 +2182,17 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 }
 
 @media (min-width: 768px) {
+  /* Резервируем место под слайдер и кнопки в неактивном состоянии —
+     высота #hero-actions не меняется при активации хода героя,
+     поэтому блок не «растёт вверх» и не подскакивает. */
+  #hero-actions {
+    min-height: calc(
+      var(--nav-btn) + 3px +
+      18px + 6px +
+      36px + 2px
+    );
+  }
+
   .seat .hero-timer-wrap,
   .seat .hero-timer-zone {
     transform: translate(12px, -50%) !important;
@@ -2212,10 +2221,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   /* Десктоп: бейдж ставки опущен на 4px от бейджа действия */
   .seat .bet-chips {
     bottom: calc(clamp(-54px, -6.6vmin, -48px) - 4px) !important;
-  }
-  /* Десктоп: центральный блок борда целиком поднят на 8px вверх */
-  #board-area {
-    transform: translate(-50%, -50%) translateY(-8px) !important;
   }
 }
 </style>
