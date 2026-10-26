@@ -1003,7 +1003,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 }
 #table-info .info-row.faded { opacity: 0.45; }
 #table-info .info-row.info-row-locked { cursor: default; }
-#info-blinds-row { color: inherit; cursor: default; }
+#info-blinds-row { color: inherit; cursor: default; pointer-events: none; touch-action: auto; }
 #info-timer-row { color: inherit; cursor: pointer; }
 
 .card {
@@ -1201,7 +1201,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   .seat.right .dealer-chip,
   .seat.top .dealer-chip { left: calc(clamp(-26px, -3.4vmin, -22px) - 10px); }
   .seat .hero-timer-wrap,
-  .seat .hero-timer-zone { margin-left: calc(var(--hero-timer-left) + 4px); }
+  .seat .hero-timer-zone { transform: translate(4px, -50%); }
 }
 
 .seat .stack-wrap { position: relative; display: flex; justify-content: center; align-items: center; }
