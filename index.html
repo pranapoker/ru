@@ -2278,6 +2278,15 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #quick-percent-list button {
     min-height: calc(32px + 2px + 2px + 2px) !important;
   }
+  /* Десктоп: убираем отдельное сжатие текста внутри кнопок быстрых ставок
+     при нажатии. Общий эффект нажатия кнопки (уменьшение и подсветка)
+     сохранён. Мобильная версия не тронута. */
+  #quick-percent-list button:active:not(:disabled) .label,
+  #quick-percent-list button:active:not(:disabled) .value,
+  #quick-percent-list button:active:not(:disabled) .label *,
+  #quick-percent-list button:active:not(:disabled) .value * {
+    transform: none !important;
+  }
 }
 </style>
 </head>
