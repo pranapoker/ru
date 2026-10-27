@@ -2266,6 +2266,12 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #btn-call:has(.call-amount:empty) .call-label {
     flex: 1 1 auto;
   }
+  /* Десктоп: сближаем кнопки верхней панели (глобус, сердце, самолётик).
+     Было 22px между слотами, стало 18px — сердечко сдвигается влево на 4px,
+     самолётик на 8px. Мобильная версия не тронута. */
+  #top-round-row {
+    gap: 18px !important;
+  }
 }
 </style>
 </head>
