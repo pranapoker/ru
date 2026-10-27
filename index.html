@@ -2281,8 +2281,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   /* Десктоп: внутри кнопок быстрых ставок текст всегда строго по центру
      по вертикали — и в покое, и при нажатии. Жёлтая метка слева и
      светло-серое значение справа прибиты к одной базовой линии: центр
-     строки совпадает с центром кнопки. Это убирает дёрганье значения
-     у 70% / 3 BB и 30% / 2 BB. */
+     строки совпадает с центром кнопки. */
   #quick-percent-list button {
     align-items: center !important;
   }
@@ -2299,18 +2298,37 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     padding: 0 !important;
     vertical-align: middle !important;
   }
+  /* Десктоп: убираем у серого значения справа любое движение при нажатии
+     и отпускании. Это и убирает дёрганье у 70% / 3 BB и 30% / 2 BB —
+     значение ведёт себя точно так же, как у кнопок, где всё ровно. */
+  #quick-percent-list button .value,
+  #quick-percent-list button .value * {
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+    position: static !important;
+    top: auto !important;
+    bottom: auto !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  #quick-percent-list button:active:not(:disabled) .value,
+  #quick-percent-list button:active:not(:disabled) .value *,
+  #quick-percent-list button:active:not(:disabled) .label,
+  #quick-percent-list button:active:not(:disabled) .label * {
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+    position: static !important;
+    top: auto !important;
+    bottom: auto !important;
+  }
   /* Десктоп: при нажатии кнопка уменьшается слабо, как на мобильном,
      одним движением вместе с текстом. Отдельное уменьшение текста внутри
      отключено, чтобы значение не дёргалось и не смещалось на пиксель. */
   #quick-percent-list button:active:not(:disabled) {
     transform: scale(0.985) !important;
     filter: brightness(1.65) !important;
-  }
-  #quick-percent-list button:active:not(:disabled) .label,
-  #quick-percent-list button:active:not(:disabled) .value,
-  #quick-percent-list button:active:not(:disabled) .label *,
-  #quick-percent-list button:active:not(:disabled) .value * {
-    transform: none !important;
   }
 }
 </style>
@@ -5577,6 +5595,10 @@ const UI = (() => {
       }
       btn.addEventListener('pointerdown', (e) => {
         if (isActionInactive() || !sliderState.active) return;
+        if (e.pointerType === 'mouse') {
+          pointerDown = false;
+          return;
+        }
         e.stopPropagation();
         pointerDown = true;
         startY = e.clientY;
@@ -5586,6 +5608,7 @@ const UI = (() => {
       });
       btn.addEventListener('pointermove', (e) => {
         if (!pointerDown || isActionInactive() || !sliderState.active) return;
+        if (e.pointerType === 'mouse') return;
         e.stopPropagation();
         const dy = startY - e.clientY;
         if (Math.abs(dy) < 1) return;
