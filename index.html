@@ -2278,10 +2278,9 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #quick-percent-list button {
     min-height: calc(32px + 2px + 2px + 2px) !important;
   }
-  /* Десктоп: внутри кнопок быстрых ставок текст всегда строго по центру
-     по вертикали — и в покое, и при нажатии. Жёлтая метка слева и
-     светло-серое значение справа прибиты к одной базовой линии: центр
-     строки совпадает с центром кнопки. */
+  /* Десктоп: метка и значение внутри кнопок быстрых ставок выровнены
+     по центру по вертикали. Плавное уменьшение кнопки и текста вместе
+     сохранено — как на мобильном. */
   #quick-percent-list button {
     align-items: center !important;
   }
@@ -2298,9 +2297,10 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     padding: 0 !important;
     vertical-align: middle !important;
   }
-  /* Десктоп: убираем у серого значения справа любое движение при нажатии
-     и отпускании. Это и убирает дёрганье у 70% / 3 BB и 30% / 2 BB —
-     значение ведёт себя точно так же, как у кнопок, где всё ровно. */
+  /* Десктоп: главное — у серого значения справа при нажатии нет
+     вертикального скачка. Текст уменьшается вместе с кнопкой (это
+     сохраняется), но не смещается по вертикали ни при нажатии,
+     ни при отпускании. */
   #quick-percent-list button .value,
   #quick-percent-list button .value * {
     transform: none !important;
@@ -2311,6 +2311,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     bottom: auto !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
   }
   #quick-percent-list button:active:not(:disabled) .value,
   #quick-percent-list button:active:not(:disabled) .value *,
@@ -2322,10 +2324,11 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     position: static !important;
     top: auto !important;
     bottom: auto !important;
+    line-height: 1 !important;
+    vertical-align: middle !important;
   }
   /* Десктоп: при нажатии кнопка уменьшается слабо, как на мобильном,
-     одним движением вместе с текстом. Отдельное уменьшение текста внутри
-     отключено, чтобы значение не дёргалось и не смещалось на пиксель. */
+     одним движением вместе с текстом. */
   #quick-percent-list button:active:not(:disabled) {
     transform: scale(0.985) !important;
     filter: brightness(1.65) !important;
