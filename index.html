@@ -2272,6 +2272,12 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #top-round-row {
     gap: 16px !important;
   }
+  /* Десктоп: кнопки быстрых ставок (проценты банка и BB-пресеты) выше на
+     2 пикселя. Блок выровнен по нижнему краю, поэтому рост идёт только
+     вверх — нижняя граница каждой кнопки остаётся на месте. */
+  #quick-percent-list button {
+    min-height: calc(32px + 2px + 2px) !important;
+  }
 }
 </style>
 </head>
