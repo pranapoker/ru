@@ -2278,35 +2278,45 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #quick-percent-list button {
     min-height: calc(32px + 2px + 2px + 2px) !important;
   }
-  /* Десктоп: убираем отдельное сжатие текста внутри кнопок быстрых ставок
-     при нажатии. Общий эффект нажатия кнопки (уменьшение и подсветка)
-     сохранён. Мобильная версия не тронута. */
+  /* Десктоп: фиксируем внутреннюю раскладку кнопок быстрых ставок.
+     Метка и значение жёстко выровнены по центру по вертикали, у каждой
+     строки фиксированная высота в масштабируемых единицах. Содержимое
+     собрано в единый центр, который не пересчитывается при сжатии кнопки.
+     Благодаря этому при нажатии уменьшается вся кнопка вместе с текстом
+     плавно и ровно, а текст всегда остаётся точно по центру — без скачка
+     и сдвига на пиксель. Мобильная версия не тронута. */
+  #quick-percent-list button {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: clamp(4px, 0.7vmin, 8px) !important;
+    line-height: 1 !important;
+  }
+  #quick-percent-list button .label,
+  #quick-percent-list button .value {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: clamp(10px, 1.3vmin, 12px) !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: middle !important;
+  }
+  #quick-percent-list button .label {
+    flex: 0 0 auto;
+  }
+  #quick-percent-list button .value {
+    flex: 0 0 auto;
+  }
+  /* Убираем любое отдельное масштабирование текста при нажатии —
+     текст сжимается только вместе с кнопкой, ровно как на мобильном. */
   #quick-percent-list button:active:not(:disabled) .label,
   #quick-percent-list button:active:not(:disabled) .value,
   #quick-percent-list button:active:not(:disabled) .label *,
   #quick-percent-list button:active:not(:disabled) .value * {
     transform: none !important;
-  }
-  /* Десктоп: фиксируем внутреннюю раскладку текста в кнопках быстрых ставок.
-     Метка и значение — две строки одинаковой масштабируемой высоты,
-     обе центрированы по вертикали. Высота строки в тех же масштабируемых
-     единицах, что и размер шрифта кнопки, поэтому на любом экране
-     раскладка остаётся пропорциональной. При нажатии высота строк
-     не меняется — скачка на 1 пиксель у части кнопок больше нет,
-     уменьшение и увеличение идут равномерно у всех кнопок. */
-  #quick-percent-list button .label,
-  #quick-percent-list button .value {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    height: calc(clamp(10px, 1.3vmin, 12px) * 1.25) !important;
-    min-height: calc(clamp(10px, 1.3vmin, 12px) * 1.25) !important;
-    line-height: calc(clamp(10px, 1.3vmin, 12px) * 1.25) !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  #quick-percent-list button .value {
-    justify-content: flex-end !important;
   }
 }
 </style>
