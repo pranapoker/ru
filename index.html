@@ -2287,6 +2287,27 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #quick-percent-list button:active:not(:disabled) .value * {
     transform: none !important;
   }
+  /* Десктоп: фиксируем внутреннюю раскладку текста в кнопках быстрых ставок.
+     Метка и значение — две строки одинаковой масштабируемой высоты,
+     обе центрированы по вертикали. Высота строки в тех же масштабируемых
+     единицах, что и размер шрифта кнопки, поэтому на любом экране
+     раскладка остаётся пропорциональной. При нажатии высота строк
+     не меняется — скачка на 1 пиксель у части кнопок больше нет,
+     уменьшение и увеличение идут равномерно у всех кнопок. */
+  #quick-percent-list button .label,
+  #quick-percent-list button .value {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    height: calc(clamp(10px, 1.3vmin, 12px) * 1.25) !important;
+    min-height: calc(clamp(10px, 1.3vmin, 12px) * 1.25) !important;
+    line-height: calc(clamp(10px, 1.3vmin, 12px) * 1.25) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  #quick-percent-list button .value {
+    justify-content: flex-end !important;
+  }
 }
 </style>
 </head>
