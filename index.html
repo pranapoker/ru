@@ -2232,6 +2232,40 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #btn-call .call-amount {
     min-height: 1.05em;
   }
+  /* Десктоп: лейбл и сумма в кнопке колл — две строки фиксированной высоты
+     в масштабируемых единицах. Пока сумма пустая, лейбл центрируется по
+     вертикали кнопки; когда сумма появляется — лейбл встаёт в верхнюю
+     строку, сумма в нижнюю. Высота кнопки не меняется. */
+  #btn-call .call-label,
+  #btn-call .call-amount {
+    display: block;
+    line-height: calc(clamp(10px, 1.4vmin, 12px) * 1.05);
+    height: calc(clamp(10px, 1.4vmin, 12px) * 1.05);
+    min-height: calc(clamp(10px, 1.4vmin, 12px) * 1.05);
+    margin: 0;
+  }
+  #btn-call .call-label {
+    font-size: clamp(10px, 1.4vmin, 12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #btn-call .call-amount {
+    font-size: clamp(9px, 1.2vmin, 11px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Пока вторая строка пустая — она не занимает места, а лейбл центрируется
+     по вертикали всей кнопки. Как только сумма появляется — обе строки
+     встают на свои места, высота кнопки не меняется. */
+  #btn-call .call-amount:empty {
+    display: none !important;
+  }
+  #btn-call .call-amount:empty + .call-label,
+  #btn-call:has(.call-amount:empty) .call-label {
+    flex: 1 1 auto;
+  }
 }
 </style>
 </head>
