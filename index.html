@@ -2278,45 +2278,31 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #quick-percent-list button {
     min-height: calc(32px + 2px + 2px + 2px) !important;
   }
-  /* Десктоп: фиксируем внутреннюю раскладку кнопок быстрых ставок.
-     Метка и значение жёстко выровнены по центру по вертикали, у каждой
-     строки фиксированная высота в масштабируемых единицах. Содержимое
-     собрано в единый центр, который не пересчитывается при сжатии кнопки.
-     Благодаря этому при нажатии уменьшается вся кнопка вместе с текстом
-     плавно и ровно, а текст всегда остаётся точно по центру — без скачка
-     и сдвига на пиксель. Мобильная версия не тронута. */
-  #quick-percent-list button {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: clamp(4px, 0.7vmin, 8px) !important;
-    line-height: 1 !important;
-  }
-  #quick-percent-list button .label,
-  #quick-percent-list button .value {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    height: clamp(10px, 1.3vmin, 12px) !important;
-    line-height: 1 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    vertical-align: middle !important;
-  }
-  #quick-percent-list button .label {
-    flex: 0 0 auto;
-  }
-  #quick-percent-list button .value {
-    flex: 0 0 auto;
-  }
-  /* Убираем любое отдельное масштабирование текста при нажатии —
-     текст сжимается только вместе с кнопкой, ровно как на мобильном. */
+  /* Десктоп: у кнопок быстрых ставок при нажатии отключаем любое отдельное
+     уменьшение и смещение текста. Сама кнопка уменьшается вместе с текстом
+     одним движением — ровно как на мобильном. Текст центрируется ровно.
+     Никаких скачков вниз-вверх на пиксель. Мобильная версия не тронута. */
   #quick-percent-list button:active:not(:disabled) .label,
   #quick-percent-list button:active:not(:disabled) .value,
   #quick-percent-list button:active:not(:disabled) .label *,
   #quick-percent-list button:active:not(:disabled) .value * {
     transform: none !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    vertical-align: baseline !important;
+    position: static !important;
+    top: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+  }
+  /* Десктоп: выравниваем текст внутри кнопок быстрых ставок строго по центру
+     по вертикали — метка и значение единым блоком по центру. */
+  #quick-percent-list button .label,
+  #quick-percent-list button .value {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    transform: none;
   }
 }
 </style>
