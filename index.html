@@ -2217,6 +2217,21 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #hero-actions.inactive #hero-buttons button {
     box-shadow: 0 3px 0 rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1) !important;
   }
+  /* Десктоп: фиксируем минимальную высоту кнопок фолд/чек/колл под две строки
+     текста (лейбл + сумма), чтобы при появлении суммы у кнопки колл блок
+     не подрастал. Высота в тех же масштабируемых единицах, что и остальные
+     размеры блока, — адаптивность сохранена. */
+  #hero-buttons button {
+    min-height: calc(clamp(4px, 0.8vmin, 6px) * 2 + clamp(10px, 1.4vmin, 12px) * 1.05 * 2 + 2px) !important;
+  }
+  /* Десктоп: у кнопки колл резервируем место под строку с суммой всегда,
+     даже когда она пустая, — чтобы высота кнопки не менялась при активации. */
+  #btn-call .call-amount:empty {
+    display: block !important;
+  }
+  #btn-call .call-amount {
+    min-height: 1.05em;
+  }
 }
 </style>
 </head>
