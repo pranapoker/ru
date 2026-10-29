@@ -2286,46 +2286,16 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   }
   #quick-percent-list button .label,
   #quick-percent-list button .value {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
     line-height: 1 !important;
-    min-height: 0 !important;
-    height: auto !important;
-    align-self: center !important;
     margin: 0 !important;
     padding: 0 !important;
-    vertical-align: middle !important;
-  }
-  /* Десктоп: главное — у серого значения справа при нажатии нет
-     вертикального скачка. Текст уменьшается вместе с кнопкой (это
-     сохраняется), но не смещается по вертикали ни при нажатии,
-     ни при отпускании. */
-  #quick-percent-list button .value,
-  #quick-percent-list button .value * {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    align-self: auto !important;
     transform: none !important;
-    transition: none !important;
-    animation: none !important;
-    position: static !important;
-    top: auto !important;
-    bottom: auto !important;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
-    line-height: 1 !important;
-    vertical-align: middle !important;
-  }
-  #quick-percent-list button:active:not(:disabled) .value,
-  #quick-percent-list button:active:not(:disabled) .value *,
-  #quick-percent-list button:active:not(:disabled) .label,
-  #quick-percent-list button:active:not(:disabled) .label * {
-    transform: none !important;
-    transition: none !important;
-    animation: none !important;
-    position: static !important;
-    top: auto !important;
-    bottom: auto !important;
-    line-height: 1 !important;
-    vertical-align: middle !important;
   }
   /* Десктоп: при нажатии кнопка уменьшается слабо, как на мобильном,
      одним движением вместе с текстом. */
