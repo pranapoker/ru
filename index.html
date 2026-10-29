@@ -2157,6 +2157,13 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   opacity: .25 !important;
 }
 
+/* Блок «Blinds + N hands» опущен на 2 пикселя ниже относительно
+   исходного положения. Сдвиг через transform не меняет поток:
+   карты борда, «Pot», Rank/ITM и места снизу не двигаются. */
+#table-info {
+  transform: translateY(2px);
+}
+
 @media (min-width: 768px) {
   .seat .hero-timer-wrap,
   .seat .hero-timer-zone {
