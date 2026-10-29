@@ -290,31 +290,41 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 /* ============================================================
    Панель под вырез — ТОЛЬКО для лендинга в standalone-режиме.
    В браузере не показывается и ничего не меняет.
+   Показ по двум условиям: медиазапрос ИЛИ класс html.pp-standalone
+   (для iPhone, где display-mode: standalone не срабатывает).
    ============================================================ */
 #lnd-standalone-top-panel {
   display: none;
 }
 @media (display-mode: standalone) {
-  #lnd-standalone-top-panel {
+  html:not(.pp-not-standalone) #lnd-standalone-top-panel {
     display: block;
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: var(--lnd-standalone-panel-h);
-    background: #000000;
-    z-index: 560; /* выше лендинга (500), ниже модалок (950) и приложения (600 не нужен — приложение перекрыто классом hidden) */
-    pointer-events: none;
   }
-  /* В standalone у лендинга убираем дублирующий отступ safe-area
-     в верхних блоках — панель уже закрывает вырез. Золотая линия
-     прижимается к нижней границе панели. */
-  #landing .lnd-top-block {
+}
+html.pp-standalone #lnd-standalone-top-panel {
+  display: block;
+}
+#lnd-standalone-top-panel {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--lnd-standalone-panel-h);
+  background: #000000;
+  z-index: 560;
+  pointer-events: none;
+}
+@media (display-mode: standalone) {
+  html:not(.pp-not-standalone) #landing .lnd-top-block {
     padding-top: 0;
   }
-  #landing .lnd-brand-top {
+  html:not(.pp-not-standalone) #landing .lnd-brand-top {
     padding-top: clamp(18px, 2.6vw, 28px);
   }
-  /* При скролле контент заходит под панель — она перекрывает верх.
-     Нижний отступ контента под панель не нужен, панель fixed поверх. */
+}
+html.pp-standalone #landing .lnd-top-block {
+  padding-top: 0;
+}
+html.pp-standalone #landing .lnd-brand-top {
+  padding-top: clamp(18px, 2.6vw, 28px);
 }
 
 .lnd-top-block {
@@ -1490,6 +1500,12 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 }
 @media (max-width: 767px) {
   #hand-nav button { font-size: calc(var(--nav-icon-size) + 2px); }
+  /* Мобильный: символ шестерёнки меньше на 2 пикселя (без прибавки +2px).
+     Сама кнопка #hn-settings не меняется. */
+  #hn-settings .hn-settings-svg {
+    width: var(--nav-icon-size) !important;
+    height: var(--nav-icon-size) !important;
+  }
 }
 
 #hero-slider-row {
@@ -2414,8 +2430,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 <body>
 
 <!-- Панель под вырез — ТОЛЬКО для лендинга в standalone-режиме.
-     В браузере не показывается (display: none). Поверх лендинга,
-     но ниже модалок. При скролле контент заходит под неё. -->
+     Показ по медиазапросу display-mode: standalone ИЛИ по классу html.pp-standalone
+     (для iPhone, где медиазапрос не срабатывает). В браузере не показывается. -->
 <div id="lnd-standalone-top-panel" aria-hidden="true"></div>
 
 <!-- Единый символ пальца-подсказки. Описан здесь один раз,
@@ -2962,6 +2978,50 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
       }, { passive: false });
     })(startButtons[s]);
   }
+})();
+</script>
+
+<script>
+/* Определяем standalone-режим. На iPhone Safari медиазапрос
+   display-mode: standalone не срабатывает, ориентируется только
+   navigator.standalone. Поэтому дополнительно ставим класс
+   pp-standalone на <html> — CSS покажет панель и уберёт двойной
+   отступ safe-area. В обычном браузере класс не ставится и
+   ничего не меняется. */
+(function() {
+  try {
+    var isStandalone = false;
+    try {
+      if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+        isStandalone = true;
+      }
+    } catch (e) {}
+    try {
+      if (window.navigator && window.navigator.standalone === true) {
+        isStandalone = true;
+      }
+    } catch (e) {}
+    if (isStandalone) {
+      document.documentElement.classList.add('pp-standalone');
+    }
+    /* Реагируем на смену режима (выход из standalone или наоборот). */
+    try {
+      if (window.matchMedia) {
+        var mq = window.matchMedia('(display-mode: standalone)');
+        var onChange = function() {
+          try {
+            if (mq.matches || (window.navigator && window.navigator.standalone === true)) {
+              document.documentElement.classList.add('pp-standalone');
+            } else {
+              document.documentElement.classList.remove('pp-standalone');
+            }
+          } catch (e) {}
+        };
+        if (mq.addEventListener) mq.addEventListener('change', onChange);
+        else if (mq.addListener) mq.addListener(onChange);
+      }
+    } catch (e) {}
+  } catch (e) {}
 })();
 </script>
 
