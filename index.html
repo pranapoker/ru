@@ -1,34 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<script>
-(function() {
-  try {
-    var host = location.hostname || '';
-    var m = host.match(/^([a-z]{2})\./);
-    var prefix = m ? m[1] : '';
-    if (prefix !== 'ru' && prefix !== 'en') prefix = 'ru';
-    var existing = null;
-    try {
-      var cookies = document.cookie ? document.cookie.split(';') : [];
-      for (var i = 0; i < cookies.length; i++) {
-        var c = cookies[i].trim();
-        if (c.indexOf('pp_lang_locked=') === 0) {
-          existing = c.substring('pp_lang_locked='.length);
-          break;
-        }
-      }
-    } catch (e) {}
-    if (existing !== prefix) {
-      var base = 'pp_lang_locked=' + prefix + '; path=/; max-age=31536000; SameSite=Lax';
-      try { document.cookie = base + '; domain=.pranapoker.workers.dev'; } catch (e) {}
-      if (document.cookie.indexOf('pp_lang_locked=' + prefix) === -1) {
-        try { document.cookie = base; } catch (e) {}
-      }
-    }
-  } catch (e) {}
-})();
-</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -45,8 +17,6 @@
 <meta name="description" content="PRANA POKER — бесплатный покерный тренажёр и симулятор турнирного покера. Тренировка логики и интуиции в покере, MTT и Sit &amp; Go. Боты PRO и VIP с ICM и GTO-логикой. Покерная тренировка без регистрации: покерные боты, турниры, интуиция в покере, логика в покере." />
 <meta name="keywords" content="PRANA POKER, ПРАНА ПОКЕР, MTT, МТТ, Sit & Go, ICM, GTO, ГТО, PRO, ПРО, VIP, ВИП, POKER, TOURNAMENTS, покер, турниры, турнирный покер, покерный тренажер, покерная тренировка, тренировка логики, логика в покере, покерная логика, тренировка интуиции, интуиция в покере, покерная интуиция, бесплатный тренажёр, покерный симулятор, покерные боты" />
 <link rel="canonical" href="https://ru.pranapoker.workers.dev/" />
-<link rel="alternate" hreflang="ru" href="https://ru.pranapoker.workers.dev/" />
-<link rel="alternate" hreflang="x-default" href="https://ru.pranapoker.workers.dev/" />
 <meta property="og:site_name" content="Prana Poker" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="ru_RU" />
@@ -2208,17 +2178,30 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   .seat .bet-chips {
     bottom: calc(clamp(-54px, -6.6vmin, -48px) - 4px) !important;
   }
+  /* Десктоп: центральный блок (Hands History, Rank/ITM, Pot, PRANA POKER,
+     карты борда, Blinds, «N hands») дополнительно опущен на 3 пикселя вниз.
+     Раньше блок уже поднят на 8 пикселей; новый сдвиг суммируется поверх
+     и даёт итог «минус 8 плюс 3» от базового положения. Двигается один
+     контейнер целиком — внутри ничего не разъезжается. */
   #board-area {
-    transform: translate(-50%, -50%) translateY(-8px) !important;
+    transform: translate(-50%, -50%) translateY(-5px) !important;
+  }
+  /* Десктоп: позиции ботов и всё, что привязано к их местам (карты, бейджи
+     типов, стек, дельта, плашки действий, фишка дилера, победитель, ставка),
+     опущены на 3 пикселя вниз. Двигается место бота целиком через его сдвиг.
+     Место героя не трогаем. */
+  #seats .seat:not(.hero) {
+    transform: translate(-50%, calc(-50% + 3px)) !important;
   }
   /* Десктоп: кнопки фолд/чек/колл в неактивном состоянии имеют ту же тень,
-     что и активном, но приглушённую — это фиксирует геометрию блока с первой отрисовки,
-     чтобы верхняя граница не поднималась на 1-2px при первой активации. */
+     что и в активном, но приглушённую — это фиксирует геометрию блока
+     с первой отрисовки, чтобы верхняя граница не поднималась на 1–2 px
+     при первой активации. */
   #hero-actions.inactive #hero-buttons button {
     box-shadow: 0 3px 0 rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1) !important;
   }
   /* Десктоп: фиксируем минимальную высоту кнопок фолд/чек/колл под две строки
-     текста (лейбл + сумма), чтобы при появлении суммы у кнопки колл блок
+     текста (лейбл и сумма), чтобы при появлении суммы у кнопки колл блок
      не подрастал. Высота в тех же масштабируемых единицах, что и остальные
      размеры блока, — адаптивность сохранена. */
   #hero-buttons button {
@@ -2267,8 +2250,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     flex: 1 1 auto;
   }
   /* Десктоп: сближаем кнопки верхней панели (глобус, сердце, самолётик).
-     Было 22px между слотами, стало 16px — сердечко сдвигается влево на 6px,
-     самолётик на 12px. Мобильная версия не тронута. */
+     Было 22 px между слотами, стало 16 px — сердечко сдвигается влево на 6 px,
+     самолётик на 12 px. Мобильная версия не тронута. */
   #top-round-row {
     gap: 16px !important;
   }
@@ -2278,14 +2261,45 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #quick-percent-list button {
     min-height: calc(32px + 2px + 2px + 2px) !important;
   }
-  /* Десктоп: метка и значение внутри кнопок быстрых ставок выровнены
-     по центру по вертикали. Плавное уменьшение кнопки и текста вместе
-     сохранено — как на мобильном. */
+  /* Десктоп: кнопки быстрых ставок — один слой фона с рамкой, поверх — общий
+     слой текста, растянутый по всей кнопке. При нажатии фон и текст сжимаются
+     одним коэффициентом 0.985; точка отсчёта у каждой части — ЦЕНТР КНОПКИ.
+     Метка и значение стоят на своих позициях (метка слева, значение справа),
+     translateY(-50%) не убираем — по вертикали на месте. При нажатии текст
+     мягко светлеет, показывая нажатие. */
   #quick-percent-list button {
+    position: relative !important;
+    display: block !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
     align-items: center !important;
+    justify-content: center !important;
+    isolation: isolate;
+    overflow: visible !important;
+    transition: none !important;
+  }
+  #quick-percent-list button::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: 7px !important;
+    background: rgba(20,18,16,.92) !important;
+    border: 1px solid #3a3530 !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    transition: transform .08s ease, filter .08s ease !important;
+    transform-origin: center center !important;
+    transform: scale(1) !important;
+    box-sizing: border-box !important;
   }
   #quick-percent-list button .label,
   #quick-percent-list button .value {
+    position: absolute !important;
+    top: 50% !important;
+    z-index: 1 !important;
     display: inline-block !important;
     vertical-align: middle !important;
     line-height: 1 !important;
@@ -2295,15 +2309,57 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     min-height: 0 !important;
     max-height: none !important;
     align-self: auto !important;
+    transform: translateY(-50%) scale(1) !important;
+    transition: transform .08s ease, color .08s ease !important;
+    will-change: transform, color;
+  }
+  /* Точка отсчёта сжатия у метки и значения — центр кнопки, а не центр самой
+     части текста. Для метки (стоит слева) точка отсчёта смещена вправо на
+     половину ширины кнопки за вычетом её левого отступа; для значения (стоит
+     справа) — влево на ту же величину. Так обе части при сжатии 0.985
+     сдвигаются к центру кнопки, синхронно с фоном, и не топчутся на месте.
+     translateY(-50%) сохраняется — вниз не съезжает. */
+  #quick-percent-list button .label {
+    left: clamp(8px, 1.1vmin, 10px) !important;
+    transform-origin: calc(100% + (100% + clamp(8px, 1.1vmin, 10px))) center !important;
+  }
+  #quick-percent-list button .value {
+    right: clamp(8px, 1.1vmin, 10px) !important;
+    transform-origin: calc(-1 * (100% + clamp(8px, 1.1vmin, 10px))) center !important;
+  }
+  /* При нажатии фон сжимается до 0.985 и подсвечивается. */
+  #quick-percent-list button:active:not(:disabled) {
+    filter: none !important;
     transform: none !important;
   }
-  /* Десктоп: при нажатии кнопка уменьшается слабо, как на мобильном,
-     одним движением вместе с текстом. */
-  #quick-percent-list button:active:not(:disabled) {
+  #quick-percent-list button:active:not(:disabled)::before {
     transform: scale(0.985) !important;
     filter: brightness(1.65) !important;
   }
-}  
+  /* При нажатии метка и значение сжимаются тем же коэффициентом 0.985, что и
+     фон, и мягко светлеют. Точка отсчёта — центр кнопки (см. выше), обе части
+     сходятся к центру кнопки. */
+  #quick-percent-list button:active:not(:disabled) .label,
+  #quick-percent-list button:active:not(:disabled) .value {
+    transform: translateY(-50%) scale(0.985) !important;
+  }
+  #quick-percent-list button:active:not(:disabled) .label {
+    color: #ffe07a !important;
+  }
+  #quick-percent-list button:active:not(:disabled) .value {
+    color: #c8c8c8 !important;
+  }
+  /* ALL-IN: при нажатии красный текст светлеет, оставаясь красным — в тон
+     тому, как светлеет жёлтая метка. Не серый, не белый. */
+  #quick-percent-list button:active:not(:disabled) .value.allin-text {
+    color: #ff7b85 !important;
+  }
+  /* Неактивные кнопки быстрых ставок — фон и тексты приглушены как раньше. */
+  #quick-percent-list.inactive button::before {
+    background: rgba(20,18,16,.92) !important;
+    border-color: #3a3530 !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -6513,8 +6569,15 @@ const UI = (() => {
       if (now - lastTapTs < TAP_COOLDOWN) return;
       lastTapTs = now;
       UI.toggleBlindGrowthPeriod();
-      const snap = session.state;
-      if (snap) UI.updateLevel(snap);
+      /* Счётчик сыгранных в текущем периоде раздач обнуляем при переключении,
+         чтобы период начинался с чистого листа и строка сразу показывала
+         точное значение: 10 раздач или 5 раздач — без отрицательных
+         и пересчитанных чисел. */
+      const state = session.state;
+      if (state) {
+        state.handsAtLevel = 0;
+        UI.updateLevel(state);
+      }
     };
     if (el.infoTimerRow) {
       el.infoTimerRow.addEventListener('click', handleTap);
@@ -6853,8 +6916,7 @@ const UI = (() => {
         isHero: false,
         botType: shuffledTypes[i],
         botClass: t ? t.cls : null,
-        stack: Engine.STARTING_STACK
-      });
+        stack: Engine.STARTING_STACK      });
     }
 
     session.heroIndex = 0;
