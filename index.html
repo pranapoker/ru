@@ -2180,17 +2180,28 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     padding-bottom: 1px;
     box-sizing: border-box;
   }
+  /* Десктоп: фишка дилера у всех, кроме героя, дополнительно опущена
+     на 2 пикселя вниз от текущего положения (правка поверх
+     предыдущего смещения на -10px / +8px). */
   .seat.left .dealer-chip {
     right: calc(clamp(-26px, -3.4vmin, -22px) - 10px - 4px) !important;
-    top: calc(28px + 8px) !important;
+    top: calc(28px + 8px + 2px) !important;
   }
   .seat.right .dealer-chip,
   .seat.top .dealer-chip {
     left: calc(clamp(-26px, -3.4vmin, -22px) - 10px - 4px) !important;
-    top: calc(28px + 8px) !important;
+    top: calc(28px + 8px + 2px) !important;
   }
   .seat .bet-chips {
     bottom: calc(clamp(-54px, -6.6vmin, -48px) - 4px) !important;
+  }
+  /* Десктоп: символ шестерёнки (только символ, не кнопка) — контейнер
+     на 1 пиксель крупнее в целом (+2.5px вместо +2px, то есть +0.5px
+     к ширине и +0.5px к высоте) и на 1 пиксель ниже внутри кнопки. */
+  #hn-settings .hn-settings-svg {
+    width: calc(var(--nav-icon-size) + 2.5px) !important;
+    height: calc(var(--nav-icon-size) + 2.5px) !important;
+    transform: translateY(1px) !important;
   }
   /* Десктоп: центральный блок (Hands History, Rank/ITM, Pot, PRANA POKER,
      карты борда, Blinds, «N hands») опущен на 3 пикселя вниз относительно
