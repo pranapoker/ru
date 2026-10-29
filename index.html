@@ -130,6 +130,9 @@
   --table-col-w: min(94vw, calc((100vh - clamp(8px, 1.6vmin, 20px)) * 9 / 16));
   --pp-heart: #b8924a;
   --pp-heart-bright: #c69a52;
+  /* Панель под вырез в установленном приложении (только лендинг).
+     Высота = максимум из безопасной зоны и 44px (как у Safari). */
+  --lnd-standalone-panel-h: max(env(safe-area-inset-top, 0px), 44px);
 }
 
 html, body {
@@ -283,6 +286,36 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 }
 .lnd-btn:focus, .lnd-btn:focus-visible { outline: none; box-shadow: 0 3px 0 #8a6508, inset 0 1px 0 rgba(255,255,255,.35); }
 .lnd-btn:active { transform: scale(0.97); filter: brightness(1.1); box-shadow: 0 1px 0 #8a6508, inset 0 1px 0 rgba(255,255,255,.35); }
+
+/* ============================================================
+   Панель под вырез — ТОЛЬКО для лендинга в standalone-режиме.
+   В браузере не показывается и ничего не меняет.
+   ============================================================ */
+#lnd-standalone-top-panel {
+  display: none;
+}
+@media (display-mode: standalone) {
+  #lnd-standalone-top-panel {
+    display: block;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--lnd-standalone-panel-h);
+    background: #000000;
+    z-index: 560; /* выше лендинга (500), ниже модалок (950) и приложения (600 не нужен — приложение перекрыто классом hidden) */
+    pointer-events: none;
+  }
+  /* В standalone у лендинга убираем дублирующий отступ safe-area
+     в верхних блоках — панель уже закрывает вырез. Золотая линия
+     прижимается к нижней границе панели. */
+  #landing .lnd-top-block {
+    padding-top: 0;
+  }
+  #landing .lnd-brand-top {
+    padding-top: clamp(18px, 2.6vw, 28px);
+  }
+  /* При скролле контент заходит под панель — она перекрывает верх.
+     Нижний отступ контента под панель не нужен, панель fixed поверх. */
+}
 
 .lnd-top-block {
   position: relative;
@@ -2379,6 +2412,11 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 </style>
 </head>
 <body>
+
+<!-- Панель под вырез — ТОЛЬКО для лендинга в standalone-режиме.
+     В браузере не показывается (display: none). Поверх лендинга,
+     но ниже модалок. При скролле контент заходит под неё. -->
+<div id="lnd-standalone-top-panel" aria-hidden="true"></div>
 
 <!-- Единый символ пальца-подсказки. Описан здесь один раз,
      дальше по коду подставляется короткой ссылкой.
