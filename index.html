@@ -2179,19 +2179,10 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
     bottom: calc(clamp(-54px, -6.6vmin, -48px) - 4px) !important;
   }
   /* Десктоп: центральный блок (Hands History, Rank/ITM, Pot, PRANA POKER,
-     карты борда, Blinds, «N hands») дополнительно опущен на 3 пикселя вниз.
-     Раньше блок уже поднят на 8 пикселей; новый сдвиг суммируется поверх
-     и даёт итог «минус 8 плюс 3» от базового положения. Двигается один
-     контейнер целиком — внутри ничего не разъезжается. */
+     карты борда, Blinds, «N hands») опущен на 3 пикселя вниз относительно
+     прежнего положения: было поднято на 8 пикселей вверх, теперь на 5. */
   #board-area {
     transform: translate(-50%, -50%) translateY(-5px) !important;
-  }
-  /* Десктоп: позиции ботов и всё, что привязано к их местам (карты, бейджи
-     типов, стек, дельта, плашки действий, фишка дилера, победитель, ставка),
-     опущены на 3 пикселя вниз. Двигается место бота целиком через его сдвиг.
-     Место героя не трогаем. */
-  #seats .seat:not(.hero) {
-    transform: translate(-50%, calc(-50% + 3px)) !important;
   }
   /* Десктоп: кнопки фолд/чек/колл в неактивном состоянии имеют ту же тень,
      что и в активном, но приглушённую — это фиксирует геометрию блока
@@ -4995,7 +4986,13 @@ const UI = (() => {
     seat.dataset.visualIndex = String(visualIndex);
     seat.style.left = pos.x + '%';
     seat.style.top  = pos.y + '%';
-    const oy = (pos.offsetY !== undefined) ? pos.offsetY : 0;
+    /* Десктоп: места ботов (не героя) опущены на 3 пикселя вниз —
+       к собственному вертикальному смещению места прибавляется 3. */
+    let oy = (pos.offsetY !== undefined) ? pos.offsetY : 0;
+    if (!player.isHero && typeof window !== 'undefined' &&
+        window.matchMedia && window.matchMedia('(min-width: 768px)').matches) {
+      oy += 3;
+    }
     seat.style.transform = `translate(-50%, calc(-50% + ${oy}px))`;
     if (pos.side) seat.classList.add(pos.side);
     if (player.isHero) seat.classList.add('hero');
