@@ -2149,6 +2149,11 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   opacity: 1 !important;
   filter: none !important;
 }
+/* Бейдж типа игрока у сфолдившего места — чуть тише остальных
+   приглушённых элементов этого места (0.30 против 0.35). */
+.seat.folded .strat-badge {
+  opacity: .30 !important;
+}
 
 @media (min-width: 768px) {
   .seat .hero-timer-wrap,
