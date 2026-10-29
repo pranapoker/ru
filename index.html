@@ -312,16 +312,19 @@ html.pp-standalone #lnd-standalone-top-panel {
   z-index: 560;
   pointer-events: none;
 }
+/* В standalone верхний блок лендинга получает отступ сверху ровно
+   на высоту панели — золотая линия встаёт прямо под панелью,
+   название под линией. В браузере не применяется. */
 @media (display-mode: standalone) {
   html:not(.pp-not-standalone) #landing .lnd-top-block {
-    padding-top: 0;
+    padding-top: var(--lnd-standalone-panel-h);
   }
   html:not(.pp-not-standalone) #landing .lnd-brand-top {
     padding-top: clamp(18px, 2.6vw, 28px);
   }
 }
 html.pp-standalone #landing .lnd-top-block {
-  padding-top: 0;
+  padding-top: var(--lnd-standalone-panel-h);
 }
 html.pp-standalone #landing .lnd-brand-top {
   padding-top: clamp(18px, 2.6vw, 28px);
