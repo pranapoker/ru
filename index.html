@@ -84,10 +84,8 @@
   ]
 }
 </script>
-<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
-<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
-<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
-<link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png" />
+<link rel="icon" type="image/jpeg" href="/icon.jpg" />
+<link rel="apple-touch-icon" href="/icon.jpg" />
 <link rel="manifest" href="/manifest.json" />
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -130,8 +128,6 @@
   --table-col-w: min(94vw, calc((100vh - clamp(8px, 1.6vmin, 20px)) * 9 / 16));
   --pp-heart: #b8924a;
   --pp-heart-bright: #c69a52;
-  /* Панель под вырез в установленном приложении (только лендинг).
-     Высота = максимум из безопасной зоны и 44px (как у Safari). */
   --lnd-standalone-panel-h: max(env(safe-area-inset-top, 0px), 44px);
 }
 
@@ -190,6 +186,38 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #landing * { scrollbar-width: none; -ms-overflow-style: none; }
 }
 
+/* Защита от выделения и перетаскивания — только внутри приложения.
+   Лендинг не тронут: там выделение обычного текста нужно для чтения и SEO. */
+#app, #app * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+#app input, #app select, #app textarea {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: default;
+}
+
+/* Лендинг: кнопки, карточки-тапзоны и декоративные элементы не выделяются
+   и не перетаскиваются. Обычный текст абзацев — свободен для чтения и SEO. */
+#landing button, #landing .lnd-btn, #landing .lnd-card, #landing .lnd-play-card,
+#landing .lnd-chip, #landing .lnd-brand-name, #landing .lnd-bot,
+#landing .lnd-feature, #landing .lnd-mobile-note, #landing .lnd-footer .brand {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+#landing img, #landing svg { -webkit-user-drag: none; }
+
 #info-modal {
   position: fixed; inset: 0; z-index: 950;
   display: none; align-items: center; justify-content: center;
@@ -227,8 +255,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 }
 .info-modal-body p { margin: 0 0 14px; }
 .info-modal-body p:last-child { margin-bottom: 0; }
-
-#landing {
+  #landing {
   position: fixed; inset: 0; z-index: 500;
   background: var(--bg); color: var(--text);
   overflow-y: auto; overflow-x: hidden;
@@ -287,12 +314,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 .lnd-btn:focus, .lnd-btn:focus-visible { outline: none; box-shadow: 0 3px 0 #8a6508, inset 0 1px 0 rgba(255,255,255,.35); }
 .lnd-btn:active { transform: scale(0.97); filter: brightness(1.1); box-shadow: 0 1px 0 #8a6508, inset 0 1px 0 rgba(255,255,255,.35); }
 
-/* ============================================================
-   Панель под вырез — ТОЛЬКО для лендинга в standalone-режиме.
-   В браузере не показывается и ничего не меняет.
-   Показ по двум условиям: медиазапрос ИЛИ класс html.pp-standalone
-   (для iPhone, где display-mode: standalone не срабатывает).
-   ============================================================ */
 #lnd-standalone-top-panel {
   display: none;
 }
@@ -312,9 +333,6 @@ html.pp-standalone #lnd-standalone-top-panel {
   z-index: 560;
   pointer-events: none;
 }
-/* В standalone верхний блок лендинга получает отступ сверху ровно
-   на высоту панели — золотая линия встаёт прямо под панелью,
-   название под линией. В браузере не применяется. */
 @media (display-mode: standalone) {
   html:not(.pp-not-standalone) #landing .lnd-top-block {
     padding-top: var(--lnd-standalone-panel-h);
@@ -691,11 +709,7 @@ html.pp-standalone #landing .lnd-brand-top {
 }
 .lnd-footer .copy { color: #555; }
 .lnd-footer .disclaimer { max-width: 58ch; color: var(--muted); }
-
-/* ============================================================
-   ПРИЛОЖЕНИЕ
-   ============================================================ */
-#app {
+  #app {
   position: fixed;
   top: 0;
   left: 0;
@@ -1404,8 +1418,7 @@ html.pp-standalone #landing .lnd-brand-top {
 .seat .hero-timer-wrap[data-state="ready"] .hero-timer-svg { opacity: 0.2; }
 .seat .hero-timer-wrap[data-state="ready"] .timer-fill { stroke-dashoffset: 0; }
 .seat .hero-timer-wrap[data-state="active"] .hero-timer-svg { opacity: 1; }
-
-#hero-actions {
+  #hero-actions {
   position: absolute;
   left: calc(var(--dash-inset) + var(--edge));
   right: calc(var(--dash-inset) + var(--edge) + var(--pct-block-w) + var(--edge));
@@ -1503,8 +1516,6 @@ html.pp-standalone #landing .lnd-brand-top {
 }
 @media (max-width: 767px) {
   #hand-nav button { font-size: calc(var(--nav-icon-size) + 2px); }
-  /* Мобильный: символ шестерёнки меньше на 2 пикселя (без прибавки +2px).
-     Сама кнопка #hn-settings не меняется. */
   #hn-settings .hn-settings-svg {
     width: var(--nav-icon-size) !important;
     height: var(--nav-icon-size) !important;
@@ -2131,8 +2142,10 @@ html.pp-standalone #landing .lnd-brand-top {
   .support-card-bottom-line { font-size: clamp(11px, 1.7vmin, 13.5px); }
   .support-card-copied { font-size: clamp(13px, 1.7vmin, 15.5px); }
   .support-card-gg { font-size: calc(clamp(10px, 1.4vmin, 11.5px) + 3px); }
-  .support-card-name-label { font-size: clamp(11px, 1.7vmin, 13.5px); }
-  .support-card-name-value { font-size: calc(clamp(11px, 1.7vmin, 13.5px) + 2px); }
+.support-card-name-label {
+  font-size: clamp(11px, 1.7vmin, 13.5px);
+}
+.support-card-name-value { font-size: calc(clamp(11px, 1.7vmin, 13.5px) + 2px); }
 }
 
 #tap-close {
@@ -2203,15 +2216,10 @@ html.pp-standalone #landing .lnd-brand-top {
   opacity: 1 !important;
   filter: none !important;
 }
-/* Бейдж типа игрока у сфолдившего места — чуть тише остальных
-   приглушённых элементов этого места (0.25 против 0.35). */
 .seat.folded .strat-badge {
   opacity: .25 !important;
 }
 
-/* Блок «Blinds + N hands» опущен на 2 пикселя ниже относительно
-   исходного положения. Сдвиг через transform не меняет поток:
-   карты борда, «Pot», Rank/ITM и места снизу не двигаются. */
 #table-info {
   transform: translateY(2px);
 }
@@ -2232,9 +2240,6 @@ html.pp-standalone #landing .lnd-brand-top {
     padding-bottom: 1px;
     box-sizing: border-box;
   }
-  /* Десктоп: фишка дилера у всех, кроме героя, дополнительно опущена
-     на 2 пикселя вниз от текущего положения (правка поверх
-     предыдущего смещения на -10px / +8px). */
   .seat.left .dealer-chip {
     right: calc(clamp(-26px, -3.4vmin, -22px) - 10px - 4px) !important;
     top: calc(28px + 8px + 2px) !important;
@@ -2247,46 +2252,26 @@ html.pp-standalone #landing .lnd-brand-top {
   .seat .bet-chips {
     bottom: calc(clamp(-54px, -6.6vmin, -48px) - 4px) !important;
   }
-  /* Десктоп: символ шестерёнки (только символ, не кнопка) — контейнер
-     на 1 пиксель крупнее в целом (+2.5px вместо +2px, то есть +0.5px
-     к ширине и +0.5px к высоте) и на 1 пиксель ниже внутри кнопки. */
   #hn-settings .hn-settings-svg {
     width: calc(var(--nav-icon-size) + 2.5px) !important;
     height: calc(var(--nav-icon-size) + 2.5px) !important;
     transform: translateY(1px) !important;
   }
-  /* Десктоп: центральный блок (Hands History, Rank/ITM, Pot, PRANA POKER,
-     карты борда, Blinds, «N hands») опущен на 3 пикселя вниз относительно
-     прежнего положения: было поднято на 8 пикселей вверх, теперь на 5. */
   #board-area {
     transform: translate(-50%, -50%) translateY(-5px) !important;
   }
-  /* Десктоп: кнопки фолд/чек/колл в неактивном состоянии имеют ту же тень,
-     что и в активном, но приглушённую — это фиксирует геометрию блока
-     с первой отрисовки, чтобы верхняя граница не поднималась на 1–2 px
-     при первой активации. */
   #hero-actions.inactive #hero-buttons button {
     box-shadow: 0 3px 0 rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.1) !important;
   }
-  /* Десктоп: фиксируем минимальную высоту кнопок фолд/чек/колл под две строки
-     текста (лейбл и сумма), чтобы при появлении суммы у кнопки колл блок
-     не подрастал. Высота в тех же масштабируемых единицах, что и остальные
-     размеры блока, — адаптивность сохранена. */
   #hero-buttons button {
     min-height: calc(clamp(4px, 0.8vmin, 6px) * 2 + clamp(10px, 1.4vmin, 12px) * 1.05 * 2 + 2px) !important;
   }
-  /* Десктоп: у кнопки колл резервируем место под строку с суммой всегда,
-     даже когда она пустая, — чтобы высота кнопки не менялась при активации. */
   #btn-call .call-amount:empty {
     display: block !important;
   }
   #btn-call .call-amount {
     min-height: 1.05em;
   }
-  /* Десктоп: лейбл и сумма в кнопке колл — две строки фиксированной высоты
-     в масштабируемых единицах. Пока сумма пустая, лейбл центрируется по
-     вертикали кнопки; когда сумма появляется — лейбл встаёт в верхнюю
-     строку, сумма в нижнюю. Высота кнопки не меняется. */
   #btn-call .call-label,
   #btn-call .call-amount {
     display: block;
@@ -2307,9 +2292,6 @@ html.pp-standalone #landing .lnd-brand-top {
     align-items: center;
     justify-content: center;
   }
-  /* Пока вторая строка пустая — она не занимает места, а лейбл центрируется
-     по вертикали всей кнопки. Как только сумма появляется — обе строки
-     встают на свои места, высота кнопки не меняется. */
   #btn-call .call-amount:empty {
     display: none !important;
   }
@@ -2317,24 +2299,12 @@ html.pp-standalone #landing .lnd-brand-top {
   #btn-call:has(.call-amount:empty) .call-label {
     flex: 1 1 auto;
   }
-  /* Десктоп: сближаем кнопки верхней панели (глобус, сердце, самолётик).
-     Было 22 px между слотами, стало 16 px — сердечко сдвигается влево на 6 px,
-     самолётик на 12 px. Мобильная версия не тронута. */
   #top-round-row {
     gap: 16px !important;
   }
-  /* Десктоп: кнопки быстрых ставок (проценты банка и BB-пресеты) выше
-     на 4 пикселя от исходного. Блок выровнен по нижнему краю, поэтому
-     рост идёт только вверх — нижняя граница каждой кнопки на месте. */
   #quick-percent-list button {
     min-height: calc(32px + 2px + 2px + 2px) !important;
   }
-  /* Десктоп: кнопки быстрых ставок — один слой фона с рамкой, поверх — общий
-     слой текста, растянутый по всей кнопке. При нажатии фон и текст сжимаются
-     одним коэффициентом 0.985; точка отсчёта у каждой части — ЦЕНТР КНОПКИ.
-     Метка и значение стоят на своих позициях (метка слева, значение справа),
-     translateY(-50%) не убираем — по вертикали на месте. При нажатии текст
-     мягко светлеет, показывая нажатие. */
   #quick-percent-list button {
     position: relative !important;
     display: block !important;
@@ -2381,12 +2351,6 @@ html.pp-standalone #landing .lnd-brand-top {
     transition: transform .08s ease, color .08s ease !important;
     will-change: transform, color;
   }
-  /* Точка отсчёта сжатия у метки и значения — центр кнопки, а не центр самой
-     части текста. Для метки (стоит слева) точка отсчёта смещена вправо на
-     половину ширины кнопки за вычетом её левого отступа; для значения (стоит
-     справа) — влево на ту же величину. Так обе части при сжатии 0.985
-     сдвигаются к центру кнопки, синхронно с фоном, и не топчутся на месте.
-     translateY(-50%) сохраняется — вниз не съезжает. */
   #quick-percent-list button .label {
     left: clamp(8px, 1.1vmin, 10px) !important;
     transform-origin: calc(100% + (100% + clamp(8px, 1.1vmin, 10px))) center !important;
@@ -2395,7 +2359,6 @@ html.pp-standalone #landing .lnd-brand-top {
     right: clamp(8px, 1.1vmin, 10px) !important;
     transform-origin: calc(-1 * (100% + clamp(8px, 1.1vmin, 10px))) center !important;
   }
-  /* При нажатии фон сжимается до 0.985 и подсвечивается. */
   #quick-percent-list button:active:not(:disabled) {
     filter: none !important;
     transform: none !important;
@@ -2404,9 +2367,6 @@ html.pp-standalone #landing .lnd-brand-top {
     transform: scale(0.985) !important;
     filter: brightness(1.65) !important;
   }
-  /* При нажатии метка и значение сжимаются тем же коэффициентом 0.985, что и
-     фон, и мягко светлеют. Точка отсчёта — центр кнопки (см. выше), обе части
-     сходятся к центру кнопки. */
   #quick-percent-list button:active:not(:disabled) .label,
   #quick-percent-list button:active:not(:disabled) .value {
     transform: translateY(-50%) scale(0.985) !important;
@@ -2417,12 +2377,9 @@ html.pp-standalone #landing .lnd-brand-top {
   #quick-percent-list button:active:not(:disabled) .value {
     color: #c8c8c8 !important;
   }
-  /* ALL-IN: при нажатии красный текст светлеет, оставаясь красным — в тон
-     тому, как светлеет жёлтая метка. Не серый, не белый. */
   #quick-percent-list button:active:not(:disabled) .value.allin-text {
     color: #ff7b85 !important;
   }
-  /* Неактивные кнопки быстрых ставок — фон и тексты приглушены как раньше. */
   #quick-percent-list.inactive button::before {
     background: rgba(20,18,16,.92) !important;
     border-color: #3a3530 !important;
@@ -2432,14 +2389,8 @@ html.pp-standalone #landing .lnd-brand-top {
 </head>
 <body>
 
-<!-- Панель под вырез — ТОЛЬКО для лендинга в standalone-режиме.
-     Показ по медиазапросу display-mode: standalone ИЛИ по классу html.pp-standalone
-     (для iPhone, где медиазапрос не срабатывает). В браузере не показывается. -->
 <div id="lnd-standalone-top-panel" aria-hidden="true"></div>
 
-<!-- Единый символ пальца-подсказки. Описан здесь один раз,
-     дальше по коду подставляется короткой ссылкой.
-     Сам блок скрыт и не занимает места. -->
 <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden;">
   <symbol id="pp-tap-hint" viewBox="0 0 256 256">
     <g transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)" fill="currentColor">
@@ -2499,8 +2450,7 @@ html.pp-standalone #landing .lnd-brand-top {
       </div>
     </div>
   </section>
-
-  <section class="lnd-section" aria-labelledby="lnd-why-title">
+    <section class="lnd-section" aria-labelledby="lnd-why-title">
     <div class="lnd-inner">
       <div>
         <div class="lnd-kicker">Почему это работает</div>
@@ -2558,8 +2508,7 @@ html.pp-standalone #landing .lnd-brand-top {
       <div class="lnd-bot-cta"><button class="lnd-btn" type="button" data-lnd-start aria-label="Начать тренировку">Начать тренировку</button></div>
     </div>
   </section>
-
-  <section class="lnd-section" aria-labelledby="lnd-benefit-title">
+                                                                          <section class="lnd-section" aria-labelledby="lnd-benefit-title">
     <div class="lnd-inner">
       <div>
         <div class="lnd-kicker">Чему ты научишься</div>
@@ -2599,8 +2548,7 @@ html.pp-standalone #landing .lnd-brand-top {
       <div style="margin-top:52px; text-align:center;"><button class="lnd-btn" type="button" data-lnd-start aria-label="Начать тренировку">Начать тренировку</button></div>
     </div>
   </section>
-
-  <section class="lnd-section" aria-labelledby="lnd-features-title">
+    <section class="lnd-section" aria-labelledby="lnd-features-title">
     <div class="lnd-inner">
       <div>
         <div class="lnd-kicker">Что внутри приложения</div>
@@ -2664,7 +2612,6 @@ html.pp-standalone #landing .lnd-brand-top {
   </footer>
 
 </div>
-
 <div id="app">
 
   <div id="table-scene">
@@ -2732,8 +2679,7 @@ html.pp-standalone #landing .lnd-brand-top {
   </div>
 
   <div id="tap-close"></div>
-
-  <div id="bottom-panel">
+    <div id="bottom-panel">
     <h3>Настройки</h3>
 
     <label class="setting">
@@ -2864,7 +2810,6 @@ html.pp-standalone #landing .lnd-brand-top {
   </div>
 
 </div>
-
 <script>
 (function() {
   'use strict';
@@ -2983,14 +2928,9 @@ html.pp-standalone #landing .lnd-brand-top {
   }
 })();
 </script>
-
 <script>
-/* Определяем standalone-режим. На iPhone Safari медиазапрос
-   display-mode: standalone не срабатывает, ориентируется только
-   navigator.standalone. Поэтому дополнительно ставим класс
-   pp-standalone на <html> — CSS покажет панель и уберёт двойной
-   отступ safe-area. В обычном браузере класс не ставится и
-   ничего не меняется. */
+/* Определяем standalone-режим: на iPhone Safari display-mode: standalone
+   не срабатывает, ориентируемся на navigator.standalone. */
 (function() {
   try {
     var isStandalone = false;
@@ -3007,7 +2947,6 @@ html.pp-standalone #landing .lnd-brand-top {
     if (isStandalone) {
       document.documentElement.classList.add('pp-standalone');
     }
-    /* Реагируем на смену режима (выход из standalone или наоборот). */
     try {
       if (window.matchMedia) {
         var mq = window.matchMedia('(display-mode: standalone)');
@@ -3029,185 +2968,178 @@ html.pp-standalone #landing .lnd-brand-top {
 </script>
 
 <script>
+/* Единая защита страницы.
+   Лендинг: защищаем кнопки, карточки и декоративные элементы от
+   выделения, правого клика и долгого нажатия. Обычный текст абзацев
+   остаётся доступным для чтения, поиска и SEO.
+   Приложение: полная защита — выделение, копирование, правый клик,
+   перетаскивание, долгое нажатие, зум. Поля ввода и списки настроек
+   работают как обычно. */
 (function() {
-  try {
-    console.log('%cSTOP!', 'color:#e63946;font-size:48px;font-weight:900;text-shadow:2px 2px 0 #000;');
-    console.log('%cЭтот код защищён авторским правом.', 'color:#ffcb2b;font-size:16px;font-weight:700;');
-    console.log('%cКопирование, распространение и использование без разрешения автора запрещено.', 'color:#ffcb2b;font-size:14px;');
-    console.log('%c© Все права защищены.', 'color:#8a8a8a;font-size:12px;');
-  } catch (e) {}
-})();
+  'use strict';
 
-(function() {
-  try {
-    document.addEventListener('contextmenu', (e) => { e.preventDefault(); return false; }, { capture: true });
-    document.addEventListener('selectstart', (e) => { e.preventDefault(); return false; }, { capture: true });
-    document.addEventListener('dragstart', (e) => { e.preventDefault(); return false; }, { capture: true });
+  var landingEl = document.getElementById('landing');
+  var appEl = document.getElementById('app');
 
-    document.addEventListener('keydown', (e) => {
-      const k = (e.key || '').toLowerCase();
-      if (e.key === 'F12') { e.preventDefault(); return false; }
-      if (e.ctrlKey && e.shiftKey && (k === 'i' || k === 'j' || k === 'c' || k === 'k')) { e.preventDefault(); return false; }
-      if (e.metaKey && e.altKey && (k === 'i' || k === 'j' || k === 'c' || k === 'k')) { e.preventDefault(); return false; }
-      if ((e.ctrlKey || e.metaKey) && k === 'u') { e.preventDefault(); return false; }
-      if ((e.ctrlKey || e.metaKey) && k === 's') { e.preventDefault(); return false; }
-      if ((e.ctrlKey || e.metaKey) && k === 'a') { e.preventDefault(); return false; }
-    }, { capture: true });
-  } catch (e) {}
-})();
-
-(function() {
-  try {
-    const VIEWPORT_LOCK = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover';
-
-    function forceViewportLock() {
-      try {
-        let meta = document.querySelector('meta[name="viewport"]');
-        if (!meta) {
-          meta = document.createElement('meta');
-          meta.setAttribute('name', 'viewport');
-          document.head.appendChild(meta);
+  /* --- Защита от правого клика и перетаскивания --- */
+  function blockContextAndDrag(root) {
+    if (!root) return;
+    root.addEventListener('contextmenu', function(e) {
+      var t = e.target;
+      if (!t) return;
+      if (t.closest('input, textarea, select')) return;
+      if (root === landingEl) {
+        /* На лендинге контекстное меню запрещено на кнопках, карточках,
+           декоративных элементах и ссылках. Обычный текст — свободен. */
+        if (t.closest('button, .lnd-btn, .lnd-card, .lnd-play-card, .lnd-chip, .lnd-bot, .lnd-feature, .lnd-mobile-note, a')) {
+          e.preventDefault();
+          return false;
         }
-        meta.setAttribute('content', VIEWPORT_LOCK);
-      } catch (e) {}
-    }
-
-    function resetZoomToDefault() {
-      try {
-        forceViewportLock();
-        try {
-          const old = document.querySelector('meta[name="viewport"]');
-          if (old && old.parentNode) {
-            const fresh = document.createElement('meta');
-            fresh.setAttribute('name', 'viewport');
-            fresh.setAttribute('content', VIEWPORT_LOCK);
-            old.parentNode.removeChild(old);
-            document.head.appendChild(fresh);
-          }
-        } catch (e) {}
-        try {
-          window.scrollTo(0, 0);
-          document.documentElement.scrollTop = 0;
-          document.body.scrollTop = 0;
-        } catch (e) {}
-      } catch (e) {}
-    }
-
-    forceViewportLock();
-
-    document.addEventListener('wheel', (e) => {
-      if (e.ctrlKey) { e.preventDefault(); return false; }
-    }, { passive: false, capture: true });
-
-    document.addEventListener('keydown', (e) => {
-      if (!(e.ctrlKey || e.metaKey)) return;
-      const k = e.key;
-      if (k === '+' || k === '-' || k === '=' || k === '0' || k === '_' ||
-          k === 'Add' || k === 'Subtract' || k === 'NumpadAdd' || k === 'NumpadSubtract' ||
-          e.code === 'Equal' || e.code === 'Minus' || e.code === 'Digit0' ||
-          e.code === 'NumpadAdd' || e.code === 'NumpadSubtract' || e.code === 'Numpad0') {
-        e.preventDefault();
-        return false;
+        return;
       }
+      /* Внутри приложения — запрещено везде. */
+      e.preventDefault();
+      return false;
     }, { capture: true });
 
-    document.addEventListener('touchstart', (e) => {
-      if (e.touches && e.touches.length > 1) { e.preventDefault(); return false; }
-    }, { passive: false, capture: true });
+    root.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+      return false;
+    }, { capture: true });
+  }
+  blockContextAndDrag(landingEl);
+  blockContextAndDrag(appEl);
 
-    document.addEventListener('touchmove', (e) => {
-      if (e.touches && e.touches.length > 1) { e.preventDefault(); return false; }
-    }, { passive: false, capture: true });
+  /* --- Защита от выделения --- */
+  function blockSelectStartOnControls(root) {
+    if (!root) return;
+    root.addEventListener('selectstart', function(e) {
+      var t = e.target;
+      if (!t) return;
+      if (t.closest('input, textarea')) return;
+      if (root === landingEl) {
+        if (t.closest('button, .lnd-btn, .lnd-card, .lnd-play-card, .lnd-chip, .lnd-bot, .lnd-feature, .lnd-mobile-note, .lnd-brand-name, a')) {
+          e.preventDefault();
+          return false;
+        }
+        return;
+      }
+      e.preventDefault();
+      return false;
+    }, { capture: true });
+  }
+  blockSelectStartOnControls(landingEl);
+  blockSelectStartOnControls(appEl);
 
-    document.addEventListener('touchend', (e) => {
-      if (e.touches && e.touches.length > 1) { e.preventDefault(); return false; }
-    }, { passive: false, capture: true });
-
-    document.addEventListener('gesturestart', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
-    document.addEventListener('gesturechange', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
-    document.addEventListener('gestureend', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
-
-    document.addEventListener('dblclick', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
-
-    function checkZoomAndFix() {
-      try {
-        const vv = window.visualViewport;
-        if (vv && vv.scale && vv.scale > 1.01) { resetZoomToDefault(); }
-      } catch (e) {}
+  /* --- Защита от долгого нажатия на кнопках и карточках лендинга --- */
+  function killLongPressOnControls(root) {
+    if (!root) return;
+    var targets = root.querySelectorAll('button, .lnd-btn, .lnd-card, .lnd-play-card, .lnd-chip, .lnd-bot, .lnd-feature, .lnd-mobile-note, .lnd-brand-name, a');
+    for (var i = 0; i < targets.length; i++) {
+      (function(el) {
+        el.addEventListener('touchstart', function(e) {
+          if (e.cancelable) e.preventDefault();
+        }, { passive: false, capture: true });
+        el.addEventListener('touchmove', function(e) {
+          if (e.cancelable) e.preventDefault();
+        }, { passive: false, capture: true });
+      })(targets[i]);
     }
+  }
+  killLongPressOnControls(landingEl);
 
-    let zoomGuardTimer = null;
-    function scheduleZoomGuard() {
-      if (zoomGuardTimer) clearTimeout(zoomGuardTimer);
-      zoomGuardTimer = setTimeout(checkZoomAndFix, 60);
+  /* --- Полная защита от долгого нажатия внутри приложения.
+         Поля ввода и списки настроек не трогаем. --- */
+  if (appEl) {
+    appEl.addEventListener('touchstart', function(e) {
+      var t = e.target;
+      if (t && t.closest('input, textarea, select')) return;
+      if (e.cancelable) e.preventDefault();
+    }, { passive: false, capture: true });
+    appEl.addEventListener('touchmove', function(e) {
+      var t = e.target;
+      if (t && t.closest('input, textarea, select')) return;
+      if (e.cancelable) e.preventDefault();
+    }, { passive: false, capture: true });
+  }
+
+  /* --- Блокировка зума: двойной тап, жест двумя пальцами,
+         колесо с управляющим, горячие клавиши масштаба. --- */
+  var VIEWPORT_LOCK = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover';
+
+  function forceViewportLock() {
+    try {
+      var meta = document.querySelector('meta[name="viewport"]');
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute('name', 'viewport');
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', VIEWPORT_LOCK);
+    } catch (e) {}
+  }
+  forceViewportLock();
+
+  /* Двойной тап — блокируем на всей странице. */
+  document.addEventListener('dblclick', function(e) {
+    e.preventDefault();
+    return false;
+  }, { passive: false, capture: true });
+
+  /* Жесты двумя пальцами. */
+  document.addEventListener('touchstart', function(e) {
+    if (e.touches && e.touches.length > 1) {
+      if (e.cancelable) e.preventDefault();
+      return false;
     }
-
-    document.addEventListener('touchend', (e) => { scheduleZoomGuard(); }, { passive: true, capture: true });
-
-    window.addEventListener('load', () => {
-      resetZoomToDefault();
-      setTimeout(resetZoomToDefault, 50);
-      setTimeout(resetZoomToDefault, 250);
-      setTimeout(checkZoomAndFix, 500);
-    });
-
-    document.addEventListener('visibilitychange', () => {
-      if (!document.hidden) { resetZoomToDefault(); setTimeout(checkZoomAndFix, 100); }
-    });
-
-    window.addEventListener('focus', () => { resetZoomToDefault(); setTimeout(checkZoomAndFix, 100); });
-    window.addEventListener('pageshow', () => { resetZoomToDefault(); setTimeout(checkZoomAndFix, 100); });
-
-    if (window.visualViewport) {
-      try {
-        window.visualViewport.addEventListener('resize', () => {
-          if (window.visualViewport.scale > 1.01) { resetZoomToDefault(); }
-        });
-      } catch (e) {}
+  }, { passive: false, capture: true });
+  document.addEventListener('touchmove', function(e) {
+    if (e.touches && e.touches.length > 1) {
+      if (e.cancelable) e.preventDefault();
+      return false;
     }
-  } catch (e) {}
+  }, { passive: false, capture: true });
+  document.addEventListener('touchend', function(e) {
+    if (e.touches && e.touches.length > 1) {
+      if (e.cancelable) e.preventDefault();
+      return false;
+    }
+  }, { passive: false, capture: true });
+
+  /* Жесты масштабирования Safari. */
+  document.addEventListener('gesturestart', function(e) { e.preventDefault(); return false; }, { passive: false, capture: true });
+  document.addEventListener('gesturechange', function(e) { e.preventDefault(); return false; }, { passive: false, capture: true });
+  document.addEventListener('gestureend', function(e) { e.preventDefault(); return false; }, { passive: false, capture: true });
+
+  /* Колесо с управляющим — блокируем масштаб. */
+  document.addEventListener('wheel', function(e) {
+    if (e.ctrlKey) {
+      e.preventDefault();
+      return false;
+    }
+  }, { passive: false, capture: true });
+
+  /* Горячие клавиши масштаба и сохранения страницы. */
+  document.addEventListener('keydown', function(e) {
+    if (!(e.ctrlKey || e.metaKey)) return;
+    var k = e.key;
+    var code = e.code;
+    if (k === '+' || k === '-' || k === '=' || k === '0' || k === '_' ||
+        k === 'Add' || k === 'Subtract' || k === 'NumpadAdd' || k === 'NumpadSubtract' ||
+        code === 'Equal' || code === 'Minus' || code === 'Digit0' ||
+        code === 'NumpadAdd' || code === 'NumpadSubtract' || code === 'Numpad0') {
+      e.preventDefault();
+      return false;
+    }
+    var lower = (k || '').toLowerCase();
+    if (lower === 's' || lower === 'u') {
+      e.preventDefault();
+      return false;
+    }
+  }, { capture: true });
 })();
-
-(function() {
-  try {
-    function killLongPress(el) {
-      if (!el) return;
-      el.addEventListener('touchstart', function(e) {
-        if (e.cancelable) e.preventDefault();
-      }, { passive: false, capture: true });
-      el.addEventListener('touchmove', function(e) {
-        if (e.cancelable) e.preventDefault();
-      }, { passive: false, capture: true });
-      el.addEventListener('contextmenu', function(e) {
-        e.preventDefault(); e.stopPropagation(); return false;
-      }, { passive: false, capture: true });
-      el.addEventListener('selectstart', function(e) {
-        e.preventDefault(); return false;
-      }, { passive: false, capture: true });
-      el.addEventListener('dragstart', function(e) {
-        e.preventDefault(); return false;
-      }, { passive: false, capture: true });
-    }
-
-    function applyToTopRow() {
-      var dock = document.getElementById('top-dock');
-      if (dock) killLongPress(dock);
-      var row = document.getElementById('top-round-row');
-      if (row) killLongPress(row);
-      var h = document.getElementById('top-heart-btn');
-      if (h) killLongPress(h);
-      var t = document.getElementById('top-tg-btn');
-      if (t) killLongPress(t);
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', applyToTopRow);
-    } else {
-      applyToTopRow();
-    }
-  } catch (e) {}
-})();
-
+</script>
+<script>
 const Engine = (() => {
 
   const SUITS = ['s', 'h', 'd', 'c'];
@@ -3812,7 +3744,8 @@ const Engine = (() => {
   };
 
 })();
-
+</script>
+<script>
 const Math2 = (() => {
 
   const R = Engine.RANK_VALUE;
@@ -4068,7 +4001,8 @@ const Plan = (() => {
   return { buildPlan, decideFromPlan };
 
 })();
-
+</script>
+<script>
 const Model = (() => {
 
   const models = new Map();
@@ -4385,8 +4319,7 @@ const Bots = (() => {
     }
     return arr;
   }
-
-  function preflopStrength(card1, card2) {
+    function preflopStrength(card1, card2) {
     const v1 = R[card1.rank], v2 = R[card2.rank];
     const hi = Math.max(v1, v2), lo = Math.min(v1, v2);
     const suited = card1.suit === card2.suit;
@@ -4678,7 +4611,8 @@ const Bots = (() => {
   };
 
 })();
-
+</script>
+<script>
 const UI = (() => {
 
   const STORAGE_KEY = 'pranaPokerSettings.v1';
@@ -5065,8 +4999,6 @@ const UI = (() => {
     seat.dataset.visualIndex = String(visualIndex);
     seat.style.left = pos.x + '%';
     seat.style.top  = pos.y + '%';
-    /* Десктоп: места ботов (не героя) опущены на 3 пикселя вниз —
-       к собственному вертикальному смещению места прибавляется 3. */
     let oy = (pos.offsetY !== undefined) ? pos.offsetY : 0;
     if (!player.isHero && typeof window !== 'undefined' &&
         window.matchMedia && window.matchMedia('(min-width: 768px)').matches) {
@@ -5134,8 +5066,7 @@ const UI = (() => {
     }
     return seat;
   }
-
-  function updateSeats(state, revealAll) {
+    function updateSeats(state, revealAll) {
     for (const p of state.players) {
       if (p.eliminated && !p.inHand) {
         const seat = document.getElementById(`seat-${p.id}`);
@@ -5421,8 +5352,7 @@ const UI = (() => {
     }
     return amount.toLocaleString('ru-RU');
   }
-
-  function setHeroActionsActive(active) {
+    function setHeroActionsActive(active) {
     el.heroActions.classList.toggle('inactive', !active);
     el.quickPercentList.classList.toggle('inactive', !active);
     if (!active && el.sliderThumb) el.sliderThumb.classList.remove('pressed');
@@ -5880,20 +5810,7 @@ const UI = (() => {
       z.addEventListener('wheel', handler, { passive: false });
     }
   }
-
-  function rebind(node, fn) {
-    const clone = node.cloneNode(true);
-    node.parentNode.replaceChild(clone, node);
-    clone.addEventListener('click', fn);
-    if (node.id === 'btn-fold')  el.btnFold  = clone;
-    if (node.id === 'btn-check') el.btnCheck = clone;
-    if (node.id === 'btn-call') {
-      el.btnCall = clone;
-      el.callAmount = clone.querySelector('#call-amount');
-    }
-  }
-
-  function updateHistoryInfo(current, total, isViewingPast) {
+    function updateHistoryInfo(current, total, isViewingPast) {
     el.hnCur.textContent = current;
     el.hnTot.textContent = total;
     const hasHistory = total > 0;
@@ -6143,7 +6060,8 @@ const UI = (() => {
   };
 
 })();
-
+</script>
+<script>
 (() => {
 
   const session = {
@@ -6265,15 +6183,6 @@ const UI = (() => {
       pauseGame();
     }
   };
-
-  function inActiveGame() {
-    if (!session.active || !session.state) return false;
-    if (session.state.handOver) return false;
-    if (session.waitingForHero) return true;
-    if (session.replay.active) return true;
-    if (session.viewingIndex >= 0) return true;
-    return !session.isPaused;
-  }
 
   function updateHuGlowFromState() {
     UI.setHuGlow(!!session.huAutoActive);
@@ -6439,8 +6348,7 @@ const UI = (() => {
       }
     } catch (err) {}
   }
-
-  function cardStr(card) {
+    function cardStr(card) {
     if (!card) return '';
     return card.rank + card.suit;
   }
@@ -6645,10 +6553,6 @@ const UI = (() => {
       if (now - lastTapTs < TAP_COOLDOWN) return;
       lastTapTs = now;
       UI.toggleBlindGrowthPeriod();
-      /* Счётчик сыгранных в текущем периоде раздач обнуляем при переключении,
-         чтобы период начинался с чистого листа и строка сразу показывала
-         точное значение: 10 раздач или 5 раздач — без отрицательных
-         и пересчитанных чисел. */
       const state = session.state;
       if (state) {
         state.handsAtLevel = 0;
@@ -6682,8 +6586,7 @@ const UI = (() => {
     el.boardCardsWrap.addEventListener('click', handleTap);
     el.boardCardsWrap.addEventListener('touchend', handleTap, { passive: false });
   }
-
-  function bindGlobalHandlers() {
+    function bindGlobalHandlers() {
     let startX = 0, startY = 0, tracking = false;
     el.app.addEventListener('touchstart', (e) => {
       if (e.touches.length !== 1) return;
@@ -7010,8 +6913,7 @@ const UI = (() => {
 
     startHand();
   }
-
-  function startHand() {
+    function startHand() {
     if (!session.active) return;
     stopReplay(true);
     stopHeroTimer();
@@ -7333,8 +7235,7 @@ const UI = (() => {
     state.actingIndex = next;
     processTurn();
   }
-
-  function finishHand() {
+    function finishHand() {
     if (session.isPaused || session.replay.active) return;
     stopHeroTimer();
     const s = Number(UI.settings.turnTime) || 0;
@@ -7906,8 +7807,7 @@ const UI = (() => {
     }
     UI.updateHistoryInfo(session.history.length, session.history.length, false);
   }
-
-  const _N = [76, 117, 99, 107, 121, 32, 76, 105, 103, 104, 116];
+    const _N = [76, 117, 99, 107, 121, 32, 76, 105, 103, 104, 116];
   const _W = [84, 78, 120, 72, 80, 56, 116, 86, 90, 85, 70, 104, 70, 121, 65, 120, 71, 71, 116, 109, 75, 69, 113, 69, 109, 57, 67, 106, 104, 98, 99, 107, 51, 65];
 
   function decodeCodes(arr) {
