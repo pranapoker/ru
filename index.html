@@ -84,8 +84,10 @@
   ]
 }
 </script>
-<link rel="icon" type="image/jpeg" href="/icon.jpg" />
-<link rel="apple-touch-icon" href="/icon.jpg" />
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
+<link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png" />
 <link rel="manifest" href="/manifest.json" />
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -186,38 +188,6 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
   #landing * { scrollbar-width: none; -ms-overflow-style: none; }
 }
 
-/* Защита от выделения и перетаскивания — только внутри приложения.
-   Лендинг не тронут: там выделение обычного текста нужно для чтения и SEO. */
-#app, #app * {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-user-drag: none;
-  -webkit-touch-callout: none;
-}
-#app input, #app select, #app textarea {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-  -webkit-touch-callout: default;
-}
-
-/* Лендинг: кнопки, карточки-тапзоны и декоративные элементы не выделяются
-   и не перетаскиваются. Обычный текст абзацев — свободен для чтения и SEO. */
-#landing button, #landing .lnd-btn, #landing .lnd-card, #landing .lnd-play-card,
-#landing .lnd-chip, #landing .lnd-brand-name, #landing .lnd-bot,
-#landing .lnd-feature, #landing .lnd-mobile-note, #landing .lnd-footer .brand {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-user-drag: none;
-  -webkit-touch-callout: none;
-}
-#landing img, #landing svg { -webkit-user-drag: none; }
-
 #info-modal {
   position: fixed; inset: 0; z-index: 950;
   display: none; align-items: center; justify-content: center;
@@ -255,7 +225,8 @@ html::-webkit-scrollbar, body::-webkit-scrollbar,
 }
 .info-modal-body p { margin: 0 0 14px; }
 .info-modal-body p:last-child { margin-bottom: 0; }
-  #landing {
+
+#landing {
   position: fixed; inset: 0; z-index: 500;
   background: var(--bg); color: var(--text);
   overflow-y: auto; overflow-x: hidden;
@@ -414,7 +385,7 @@ html.pp-standalone #landing .lnd-brand-top {
 @media (max-width: 420px) {
   .lnd-brand-name { letter-spacing: 1px; font-size: clamp(20px, 5.6vmin, 24px); transform: scaleX(1.10); padding-left: 1px; }
 }
-
+  
 .lnd-hero-grid {
   position: relative; z-index: 1; display: grid; grid-template-columns: 1fr;
   gap: clamp(28px, 6vw, 48px); align-items: center;
@@ -709,7 +680,8 @@ html.pp-standalone #landing .lnd-brand-top {
 }
 .lnd-footer .copy { color: #555; }
 .lnd-footer .disclaimer { max-width: 58ch; color: var(--muted); }
-  #app {
+
+#app {
   position: fixed;
   top: 0;
   left: 0;
@@ -832,7 +804,7 @@ html.pp-standalone #landing .lnd-brand-top {
   line-height: 1.3;
   min-height: 1.3em;
 }
-
+  
 #hands-history-row {
   position: absolute;
   left: 50%;
@@ -1357,7 +1329,7 @@ html.pp-standalone #landing .lnd-brand-top {
   pointer-events: none;
 }
 .seat .bet-chips.hidden { display: none; }
-
+  
 .seat .hero-timer-wrap,
 .seat .hero-timer-zone {
   position: absolute;
@@ -1418,7 +1390,8 @@ html.pp-standalone #landing .lnd-brand-top {
 .seat .hero-timer-wrap[data-state="ready"] .hero-timer-svg { opacity: 0.2; }
 .seat .hero-timer-wrap[data-state="ready"] .timer-fill { stroke-dashoffset: 0; }
 .seat .hero-timer-wrap[data-state="active"] .hero-timer-svg { opacity: 1; }
-  #hero-actions {
+
+#hero-actions {
   position: absolute;
   left: calc(var(--dash-inset) + var(--edge));
   right: calc(var(--dash-inset) + var(--edge) + var(--pct-block-w) + var(--edge));
@@ -1815,7 +1788,7 @@ html.pp-standalone #landing .lnd-brand-top {
   filter: brightness(1.1);
   box-shadow: 0 1px 0 #8a6508, inset 0 1px 0 rgba(255,255,255,.35);
 }
-
+  
 #top-dock {
   position: absolute;
   left: 0; right: 0; top: 0; bottom: 0;
@@ -2142,10 +2115,8 @@ html.pp-standalone #landing .lnd-brand-top {
   .support-card-bottom-line { font-size: clamp(11px, 1.7vmin, 13.5px); }
   .support-card-copied { font-size: clamp(13px, 1.7vmin, 15.5px); }
   .support-card-gg { font-size: calc(clamp(10px, 1.4vmin, 11.5px) + 3px); }
-.support-card-name-label {
-  font-size: clamp(11px, 1.7vmin, 13.5px);
-}
-.support-card-name-value { font-size: calc(clamp(11px, 1.7vmin, 13.5px) + 2px); }
+  .support-card-name-label { font-size: clamp(11px, 1.7vmin, 13.5px); }
+  .support-card-name-value { font-size: calc(clamp(11px, 1.7vmin, 13.5px) + 2px); }
 }
 
 #tap-close {
@@ -2192,10 +2163,7 @@ html.pp-standalone #landing .lnd-brand-top {
   70% { opacity: 1; }
   100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
 }
-
-/* ============================================================
-   ФИНАЛЬНЫЕ ПЕРЕОПРЕДЕЛЕНИЯ (стоят последними, перебивают всё)
-   ============================================================ */
+  
 #info-blinds-row {
   cursor: default !important;
   pointer-events: none !important;
@@ -2242,12 +2210,12 @@ html.pp-standalone #landing .lnd-brand-top {
   }
   .seat.left .dealer-chip {
     right: calc(clamp(-26px, -3.4vmin, -22px) - 10px - 4px) !important;
-    top: calc(28px + 8px + 2px) !important;
+    top: calc(28px + 8px + 4px) !important;
   }
   .seat.right .dealer-chip,
   .seat.top .dealer-chip {
     left: calc(clamp(-26px, -3.4vmin, -22px) - 10px - 4px) !important;
-    top: calc(28px + 8px + 2px) !important;
+    top: calc(28px + 8px + 4px) !important;
   }
   .seat .bet-chips {
     bottom: calc(clamp(-54px, -6.6vmin, -48px) - 4px) !important;
@@ -2443,14 +2411,15 @@ html.pp-standalone #landing .lnd-brand-top {
           <div class="lnd-chip c1"></div><div class="lnd-chip c2"></div><div class="lnd-chip c3"></div>
         </div>
       </div>
-
+      
       <div class="lnd-mobile-cta">
         <p class="lnd-sub-mobile">Бесплатно. Без установки. Без регистрации.</p>
         <button class="lnd-btn" type="button" data-lnd-start aria-label="Начать тренировку">Начать тренировку</button>
       </div>
     </div>
   </section>
-    <section class="lnd-section" aria-labelledby="lnd-why-title">
+
+  <section class="lnd-section" aria-labelledby="lnd-why-title">
     <div class="lnd-inner">
       <div>
         <div class="lnd-kicker">Почему это работает</div>
@@ -2508,7 +2477,8 @@ html.pp-standalone #landing .lnd-brand-top {
       <div class="lnd-bot-cta"><button class="lnd-btn" type="button" data-lnd-start aria-label="Начать тренировку">Начать тренировку</button></div>
     </div>
   </section>
-                                                                          <section class="lnd-section" aria-labelledby="lnd-benefit-title">
+
+  <section class="lnd-section" aria-labelledby="lnd-benefit-title">
     <div class="lnd-inner">
       <div>
         <div class="lnd-kicker">Чему ты научишься</div>
@@ -2528,7 +2498,7 @@ html.pp-standalone #landing .lnd-brand-top {
       </div>
     </div>
   </section>
-
+  
   <section class="lnd-section" aria-labelledby="lnd-how-title">
     <div class="lnd-inner">
       <div>
@@ -2548,7 +2518,8 @@ html.pp-standalone #landing .lnd-brand-top {
       <div style="margin-top:52px; text-align:center;"><button class="lnd-btn" type="button" data-lnd-start aria-label="Начать тренировку">Начать тренировку</button></div>
     </div>
   </section>
-    <section class="lnd-section" aria-labelledby="lnd-features-title">
+
+  <section class="lnd-section" aria-labelledby="lnd-features-title">
     <div class="lnd-inner">
       <div>
         <div class="lnd-kicker">Что внутри приложения</div>
@@ -2612,6 +2583,7 @@ html.pp-standalone #landing .lnd-brand-top {
   </footer>
 
 </div>
+
 <div id="app">
 
   <div id="table-scene">
@@ -2679,7 +2651,8 @@ html.pp-standalone #landing .lnd-brand-top {
   </div>
 
   <div id="tap-close"></div>
-    <div id="bottom-panel">
+
+  <div id="bottom-panel">
     <h3>Настройки</h3>
 
     <label class="setting">
@@ -2690,7 +2663,7 @@ html.pp-standalone #landing .lnd-brand-top {
         <option value="max" selected>Максимум</option>
       </select>
     </label>
-
+    
     <label class="setting">
       <span>Стиль карт</span>
       <select id="set-card-style">
@@ -2810,6 +2783,7 @@ html.pp-standalone #landing .lnd-brand-top {
   </div>
 
 </div>
+
 <script>
 (function() {
   'use strict';
@@ -2888,12 +2862,15 @@ html.pp-standalone #landing .lnd-brand-top {
       })(tappables[j]);
     }
   }
-
+  
   function showApp() {
     if (!landing || !app) return;
     landing.classList.add('hidden');
     app.classList.add('visible');
     app.classList.remove('hidden');
+    /* Запоминаем, что пользователь был за столом — чтобы при
+       следующем запуске приложение открылось сразу в игре. */
+    try { localStorage.setItem('pp-last-view', 'app'); } catch (e) {}
     if (window.__ppAppActivate) {
       try { window.__ppAppActivate(); } catch (e) {}
     }
@@ -2904,6 +2881,9 @@ html.pp-standalone #landing .lnd-brand-top {
     landing.classList.remove('hidden');
     app.classList.remove('visible');
     app.classList.add('hidden');
+    /* Запоминаем, что пользователь на лендинге — при следующем
+       запуске приложение откроется с начала лендинга. */
+    try { localStorage.setItem('pp-last-view', 'landing'); } catch (e) {}
     if (window.__ppAppDeactivate) {
       try { window.__ppAppDeactivate(); } catch (e) {}
     }
@@ -2926,11 +2906,27 @@ html.pp-standalone #landing .lnd-brand-top {
       }, { passive: false });
     })(startButtons[s]);
   }
+
+  /* При запуске: если пользователь закрыл приложение, находясь за
+     столом, — сразу показываем приложение и стартуем новую игру.
+     Если закрыл на лендинге — открываем лендинг с начала. */
+  function restoreLastViewOnLoad() {
+    var last = null;
+    try { last = localStorage.getItem('pp-last-view'); } catch (e) {}
+    if (last === 'app') {
+      /* Показываем приложение сразу. Игра запустится новая через
+         __ppAppActivate (там startNewSession при отсутствии активной). */
+      try { landing.classList.add('hidden'); } catch (e) {}
+      try { app.classList.add('visible'); } catch (e) {}
+      try { app.classList.remove('hidden'); } catch (e) {}
+    }
+  }
+  restoreLastViewOnLoad();
+
 })();
 </script>
+
 <script>
-/* Определяем standalone-режим: на iPhone Safari display-mode: standalone
-   не срабатывает, ориентируемся на navigator.standalone. */
 (function() {
   try {
     var isStandalone = false;
@@ -2968,392 +2964,465 @@ html.pp-standalone #landing .lnd-brand-top {
 </script>
 
 <script>
-/* Единая защита страницы.
-   Лендинг: защищаем кнопки, карточки и декоративные элементы от
-   выделения, правого клика и долгого нажатия. Обычный текст абзацев
-   остаётся доступным для чтения, поиска и SEO.
-   Приложение: полная защита — выделение, копирование, правый клик,
-   перетаскивание, долгое нажатие, зум. Поля ввода и списки настроек
-   работают как обычно. */
 (function() {
-  'use strict';
+  try {
+    console.log('%cSTOP!', 'color:#e63946;font-size:48px;font-weight:900;text-shadow:2px 2px 0 #000;');
+    console.log('%cЭтот код защищён авторским правом.', 'color:#ffcb2b;font-size:16px;font-weight:700;');
+    console.log('%cКопирование, распространение и использование без разрешения автора запрещено.', 'color:#ffcb2b;font-size:14px;');
+    console.log('%c© Все права защищены.', 'color:#8a8a8a;font-size:12px;');
+  } catch (e) {}
+})();
 
-  var landingEl = document.getElementById('landing');
-  var appEl = document.getElementById('app');
+(function() {
+  try {
+    document.addEventListener('contextmenu', (e) => { e.preventDefault(); return false; }, { capture: true });
+    document.addEventListener('selectstart', (e) => { e.preventDefault(); return false; }, { capture: true });
+    document.addEventListener('dragstart', (e) => { e.preventDefault(); return false; }, { capture: true });
 
-  /* --- Защита от правого клика и перетаскивания --- */
-  function blockContextAndDrag(root) {
-    if (!root) return;
-    root.addEventListener('contextmenu', function(e) {
-      var t = e.target;
-      if (!t) return;
-      if (t.closest('input, textarea, select')) return;
-      if (root === landingEl) {
-        /* На лендинге контекстное меню запрещено на кнопках, карточках,
-           декоративных элементах и ссылках. Обычный текст — свободен. */
-        if (t.closest('button, .lnd-btn, .lnd-card, .lnd-play-card, .lnd-chip, .lnd-bot, .lnd-feature, .lnd-mobile-note, a')) {
-          e.preventDefault();
-          return false;
+    document.addEventListener('keydown', (e) => {
+      const k = (e.key || '').toLowerCase();
+      if (e.key === 'F12') { e.preventDefault(); return false; }
+      if (e.ctrlKey && e.shiftKey && (k === 'i' || k === 'j' || k === 'c' || k === 'k')) { e.preventDefault(); return false; }
+      if (e.metaKey && e.altKey && (k === 'i' || k === 'j' || k === 'c' || k === 'k')) { e.preventDefault(); return false; }
+      if ((e.ctrlKey || e.metaKey) && k === 'u') { e.preventDefault(); return false; }
+      if ((e.ctrlKey || e.metaKey) && k === 's') { e.preventDefault(); return false; }
+      if ((e.ctrlKey || e.metaKey) && k === 'a') { e.preventDefault(); return false; }
+    }, { capture: true });
+  } catch (e) {}
+})();
+
+(function() {
+  try {
+    const VIEWPORT_LOCK = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover';
+
+    function forceViewportLock() {
+      try {
+        let meta = document.querySelector('meta[name="viewport"]');
+        if (!meta) {
+          meta = document.createElement('meta');
+          meta.setAttribute('name', 'viewport');
+          document.head.appendChild(meta);
         }
-        return;
-      }
-      /* Внутри приложения — запрещено везде. */
-      e.preventDefault();
-      return false;
-    }, { capture: true });
-
-    root.addEventListener('dragstart', function(e) {
-      e.preventDefault();
-      return false;
-    }, { capture: true });
-  }
-  blockContextAndDrag(landingEl);
-  blockContextAndDrag(appEl);
-
-  /* --- Защита от выделения --- */
-  function blockSelectStartOnControls(root) {
-    if (!root) return;
-    root.addEventListener('selectstart', function(e) {
-      var t = e.target;
-      if (!t) return;
-      if (t.closest('input, textarea')) return;
-      if (root === landingEl) {
-        if (t.closest('button, .lnd-btn, .lnd-card, .lnd-play-card, .lnd-chip, .lnd-bot, .lnd-feature, .lnd-mobile-note, .lnd-brand-name, a')) {
-          e.preventDefault();
-          return false;
-        }
-        return;
-      }
-      e.preventDefault();
-      return false;
-    }, { capture: true });
-  }
-  blockSelectStartOnControls(landingEl);
-  blockSelectStartOnControls(appEl);
-
-  /* --- Защита от долгого нажатия на кнопках и карточках лендинга --- */
-  function killLongPressOnControls(root) {
-    if (!root) return;
-    var targets = root.querySelectorAll('button, .lnd-btn, .lnd-card, .lnd-play-card, .lnd-chip, .lnd-bot, .lnd-feature, .lnd-mobile-note, .lnd-brand-name, a');
-    for (var i = 0; i < targets.length; i++) {
-      (function(el) {
-        el.addEventListener('touchstart', function(e) {
-          if (e.cancelable) e.preventDefault();
-        }, { passive: false, capture: true });
-        el.addEventListener('touchmove', function(e) {
-          if (e.cancelable) e.preventDefault();
-        }, { passive: false, capture: true });
-      })(targets[i]);
+        meta.setAttribute('content', VIEWPORT_LOCK);
+      } catch (e) {}
     }
-  }
-  killLongPressOnControls(landingEl);
 
-  /* --- Полная защита от долгого нажатия внутри приложения.
-         Поля ввода и списки настроек не трогаем. --- */
-  if (appEl) {
-    appEl.addEventListener('touchstart', function(e) {
-      var t = e.target;
-      if (t && t.closest('input, textarea, select')) return;
-      if (e.cancelable) e.preventDefault();
+    function resetZoomToDefault() {
+      try {
+        forceViewportLock();
+        try {
+          const old = document.querySelector('meta[name="viewport"]');
+          if (old && old.parentNode) {
+            const fresh = document.createElement('meta');
+            fresh.setAttribute('name', 'viewport');
+            fresh.setAttribute('content', VIEWPORT_LOCK);
+            old.parentNode.removeChild(old);
+            document.head.appendChild(fresh);
+          }
+        } catch (e) {}
+        try {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        } catch (e) {}
+      } catch (e) {}
+    }
+
+    forceViewportLock();
+
+    document.addEventListener('wheel', (e) => {
+      if (e.ctrlKey) { e.preventDefault(); return false; }
     }, { passive: false, capture: true });
-    appEl.addEventListener('touchmove', function(e) {
-      var t = e.target;
-      if (t && t.closest('input, textarea, select')) return;
-      if (e.cancelable) e.preventDefault();
-    }, { passive: false, capture: true });
-  }
 
-  /* --- Блокировка зума: двойной тап, жест двумя пальцами,
-         колесо с управляющим, горячие клавиши масштаба. --- */
-  var VIEWPORT_LOCK = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover';
-
-  function forceViewportLock() {
-    try {
-      var meta = document.querySelector('meta[name="viewport"]');
-      if (!meta) {
-        meta = document.createElement('meta');
-        meta.setAttribute('name', 'viewport');
-        document.head.appendChild(meta);
+    document.addEventListener('keydown', (e) => {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      const k = e.key;
+      if (k === '+' || k === '-' || k === '=' || k === '0' || k === '_' ||
+          k === 'Add' || k === 'Subtract' || k === 'NumpadAdd' || k === 'NumpadSubtract' ||
+          e.code === 'Equal' || e.code === 'Minus' || e.code === 'Digit0' ||
+          e.code === 'NumpadAdd' || e.code === 'NumpadSubtract' || e.code === 'Numpad0') {
+        e.preventDefault();
+        return false;
       }
-      meta.setAttribute('content', VIEWPORT_LOCK);
-    } catch (e) {}
+    }, { capture: true });
+
+    document.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches.length > 1) { e.preventDefault(); return false; }
+    }, { passive: false, capture: true });
+
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches.length > 1) { e.preventDefault(); return false; }
+    }, { passive: false, capture: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (e.touches && e.touches.length > 1) { e.preventDefault(); return false; }
+    }, { passive: false, capture: true });
+
+    document.addEventListener('gesturestart', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
+    document.addEventListener('gesturechange', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
+    document.addEventListener('gestureend', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
+
+    document.addEventListener('dblclick', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
+
+    function checkZoomAndFix() {
+      try {
+        const vv = window.visualViewport;
+        if (vv && vv.scale && vv.scale > 1.01) { resetZoomToDefault(); }
+      } catch (e) {}
+    }
+
+    let zoomGuardTimer = null;
+    function scheduleZoomGuard() {
+      if (zoomGuardTimer) clearTimeout(zoomGuardTimer);
+      zoomGuardTimer = setTimeout(checkZoomAndFix, 60);
+    }
+
+    document.addEventListener('touchend', (e) => { scheduleZoomGuard(); }, { passive: true, capture: true });
+
+    window.addEventListener('load', () => {
+      resetZoomToDefault();
+      setTimeout(resetZoomToDefault, 50);
+      setTimeout(resetZoomToDefault, 250);
+      setTimeout(checkZoomAndFix, 500);
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) { resetZoomToDefault(); setTimeout(checkZoomAndFix, 100); }
+    });
+
+    window.addEventListener('focus', () => { resetZoomToDefault(); setTimeout(checkZoomAndFix, 100); });
+    window.addEventListener('pageshow', () => { resetZoomToDefault(); setTimeout(checkZoomAndFix, 100); });
+
+    if (window.visualViewport) {
+      try {
+        window.visualViewport.addEventListener('resize', () => {
+          if (window.visualViewport.scale > 1.01) { resetZoomToDefault(); }
+        });
+      } catch (e) {}
+    }
+  } catch (e) {}
+})();
+
+(function() {
+  try {
+    function killLongPress(el) {
+      if (!el) return;
+      el.addEventListener('touchstart', function(e) {
+        if (e.cancelable) e.preventDefault();
+      }, { passive: false, capture: true });
+      el.addEventListener('touchmove', function(e) {
+        if (e.cancelable) e.preventDefault();
+      }, { passive: false, capture: true });
+      el.addEventListener('contextmenu', function(e) {
+        e.preventDefault(); e.stopPropagation(); return false;
+      }, { passive: false, capture: true });
+      el.addEventListener('selectstart', function(e) {
+        e.preventDefault(); return false;
+      }, { passive: false, capture: true });
+      el.addEventListener('dragstart', function(e) {
+        e.preventDefault(); return false;
+      }, { passive: false, capture: true });
+    }
+
+    function applyToTopRow() {
+      var dock = document.getElementById('top-dock');
+      if (dock) killLongPress(dock);
+      var row = document.getElementById('top-round-row');
+      if (row) killLongPress(row);
+      var h = document.getElementById('top-heart-btn');
+      if (h) killLongPress(h);
+      var t = document.getElementById('top-tg-btn');
+      if (t) killLongPress(t);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyToTopRow);
+    } else {
+      applyToTopRow();
+    }
+  } catch (e) {}
+})();
+  
+  function showApp() {
+    if (!landing || !app) return;
+    landing.classList.add('hidden');
+    app.classList.add('visible');
+    app.classList.remove('hidden');
+    /* Запоминаем, что пользователь был за столом — чтобы при
+       следующем запуске приложение открылось сразу в игре. */
+    try { localStorage.setItem('pp-last-view', 'app'); } catch (e) {}
+    if (window.__ppAppActivate) {
+      try { window.__ppAppActivate(); } catch (e) {}
+    }
   }
-  forceViewportLock();
 
-  /* Двойной тап — блокируем на всей странице. */
-  document.addEventListener('dblclick', function(e) {
-    e.preventDefault();
-    return false;
-  }, { passive: false, capture: true });
+  function showLanding() {
+    if (!landing || !app) return;
+    landing.classList.remove('hidden');
+    app.classList.remove('visible');
+    app.classList.add('hidden');
+    /* Запоминаем, что пользователь на лендинге — при следующем
+       запуске приложение откроется с начала лендинга. */
+    try { localStorage.setItem('pp-last-view', 'landing'); } catch (e) {}
+    if (window.__ppAppDeactivate) {
+      try { window.__ppAppDeactivate(); } catch (e) {}
+    }
+    try { landing.scrollTop = 0; } catch (e) {}
+  }
 
-  /* Жесты двумя пальцами. */
-  document.addEventListener('touchstart', function(e) {
-    if (e.touches && e.touches.length > 1) {
-      if (e.cancelable) e.preventDefault();
-      return false;
-    }
-  }, { passive: false, capture: true });
-  document.addEventListener('touchmove', function(e) {
-    if (e.touches && e.touches.length > 1) {
-      if (e.cancelable) e.preventDefault();
-      return false;
-    }
-  }, { passive: false, capture: true });
-  document.addEventListener('touchend', function(e) {
-    if (e.touches && e.touches.length > 1) {
-      if (e.cancelable) e.preventDefault();
-      return false;
-    }
-  }, { passive: false, capture: true });
+  window.__ppShowApp = showApp;
+  window.__ppShowLanding = showLanding;
 
-  /* Жесты масштабирования Safari. */
-  document.addEventListener('gesturestart', function(e) { e.preventDefault(); return false; }, { passive: false, capture: true });
-  document.addEventListener('gesturechange', function(e) { e.preventDefault(); return false; }, { passive: false, capture: true });
-  document.addEventListener('gestureend', function(e) { e.preventDefault(); return false; }, { passive: false, capture: true });
+  var startButtons = document.querySelectorAll('[data-lnd-start]');
+  for (var s = 0; s < startButtons.length; s++) {
+    (function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault(); e.stopPropagation();
+        showApp();
+      });
+      btn.addEventListener('touchend', function(e) {
+        e.preventDefault(); e.stopPropagation();
+        showApp();
+      }, { passive: false });
+    })(startButtons[s]);
+  }
 
-  /* Колесо с управляющим — блокируем масштаб. */
-  document.addEventListener('wheel', function(e) {
-    if (e.ctrlKey) {
-      e.preventDefault();
-      return false;
+  /* При запуске: если пользователь закрыл приложение, находясь за
+     столом, — сразу показываем приложение и стартуем новую игру.
+     Если закрыл на лендинге — открываем лендинг с начала. */
+  function restoreLastViewOnLoad() {
+    var last = null;
+    try { last = localStorage.getItem('pp-last-view'); } catch (e) {}
+    if (last === 'app') {
+      /* Показываем приложение сразу. Игра запустится новая через
+         __ppAppActivate (там startNewSession при отсутствии активной). */
+      try { landing.classList.add('hidden'); } catch (e) {}
+      try { app.classList.add('visible'); } catch (e) {}
+      try { app.classList.remove('hidden'); } catch (e) {}
     }
-  }, { passive: false, capture: true });
+  }
+  restoreLastViewOnLoad();
 
-  /* Горячие клавиши масштаба и сохранения страницы. */
-  document.addEventListener('keydown', function(e) {
-    if (!(e.ctrlKey || e.metaKey)) return;
-    var k = e.key;
-    var code = e.code;
-    if (k === '+' || k === '-' || k === '=' || k === '0' || k === '_' ||
-        k === 'Add' || k === 'Subtract' || k === 'NumpadAdd' || k === 'NumpadSubtract' ||
-        code === 'Equal' || code === 'Minus' || code === 'Digit0' ||
-        code === 'NumpadAdd' || code === 'NumpadSubtract' || code === 'Numpad0') {
-      e.preventDefault();
-      return false;
-    }
-    var lower = (k || '').toLowerCase();
-    if (lower === 's' || lower === 'u') {
-      e.preventDefault();
-      return false;
-    }
-  }, { capture: true });
 })();
 </script>
+
 <script>
-const Engine = (() => {
-
-  const SUITS = ['s', 'h', 'd', 'c'];
-  const RANKS = ['2','3','4','5','6','7','8','9','T','J','Q','K','A'];
-  const RANK_VALUE = { '2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'T':10,'J':11,'Q':12,'K':13,'A':14 };
-  const HAND_CATEGORIES = { HIGH_CARD:0, PAIR:1, TWO_PAIR:2, TRIPS:3, STRAIGHT:4, FLUSH:5, FULL_HOUSE:6, QUADS:7, STRAIGHT_FLUSH:8, ROYAL_FLUSH:9 };
-  const BLIND_LEVELS = [
-    { sb: 10, bb: 20, ante: 0 }, { sb: 15, bb: 30, ante: 0 },
-    { sb: 25, bb: 50, ante: 0 }, { sb: 50, bb: 100, ante: 10 },
-    { sb: 75, bb: 150, ante: 15 }, { sb: 100, bb: 200, ante: 25 },
-    { sb: 150, bb: 300, ante: 30 }, { sb: 200, bb: 400, ante: 50 },
-    { sb: 300, bb: 600, ante: 75 }, { sb: 400, bb: 800, ante: 100 },
-    { sb: 500, bb: 1000, ante: 100 }, { sb: 750, bb: 1500, ante: 150 },
-    { sb: 1000, bb: 2000, ante: 200 }, { sb: 1500, bb: 3000, ante: 300 },
-    { sb: 2000, bb: 4000, ante: 400 }, { sb: 3000, bb: 6000, ante: 600 }
-  ];
-  const STARTING_STACK = 2000;
-  const SEATS = 8;
-  const STREETS = ['preflop', 'flop', 'turn', 'river'];
-
-  const POSITION_LABELS = {
-    8: ['BTN','SB','BB','UTG','UTG1','LJ','HJ','CO'],
-    7: ['BTN','SB','BB','UTG1','LJ','HJ','CO'],
-    6: ['BTN','SB','BB','LJ','HJ','CO'],
-    5: ['BTN','SB','BB','HJ','CO'],
-    4: ['BTN','SB','BB','CO'],
-    3: ['BTN','SB','BB'],
-    2: ['BTN','BB'],
-    1: []
-  };
-
-  function cryptoRandomInt(maxExclusive) {
-    if (maxExclusive <= 0) return 0;
-    const range = 0x100000000;
-    const limit = range - (range % maxExclusive);
-    const buf = new Uint32Array(1);
-    let x;
-    do { crypto.getRandomValues(buf); x = buf[0]; } while (x >= limit);
-    return x % maxExclusive;
-  }
-
-  function createDeck() {
-    const deck = [];
-    for (const s of SUITS) for (const r of RANKS) deck.push({ rank: r, suit: s });
-    return deck;
-  }
-
-  function shuffle(deck) {
-    const d = deck.slice();
-    for (let i = d.length - 1; i > 0; i--) {
-      const j = cryptoRandomInt(i + 1);
-      [d[i], d[j]] = [d[j], d[i]];
-    }
-    return d;
-  }
-
-  function combinations(arr, k) {
-    const result = [];
-    const combo = [];
-    (function recurse(start) {
-      if (combo.length === k) { result.push(combo.slice()); return; }
-      for (let i = start; i < arr.length; i++) { combo.push(arr[i]); recurse(i + 1); combo.pop(); }
-    })(0);
-    return result;
-  }
-
-  function evaluate5(cards) {
-    const values = cards.map(c => RANK_VALUE[c.rank]).sort((a,b) => b - a);
-    const suits = cards.map(c => c.suit);
-    const isFlush = suits.every(s => s === suits[0]);
-    const uniqueVals = [...new Set(values)].sort((a,b) => b - a);
-    let straightHigh = 0;
-    for (let i = 0; i <= uniqueVals.length - 5; i++) {
-      if (uniqueVals[i] - uniqueVals[i+4] === 4) { straightHigh = uniqueVals[i]; break; }
-    }
-    if (!straightHigh && uniqueVals.includes(14) && uniqueVals.includes(2) &&
-        uniqueVals.includes(3) && uniqueVals.includes(4) && uniqueVals.includes(5)) straightHigh = 5;
-
-    const freq = {};
-    for (const v of values) freq[v] = (freq[v] || 0) + 1;
-    const groups = Object.entries(freq).map(([v, c]) => [c, Number(v)]).sort((a, b) => b[0] - a[0] || b[1] - a[1]);
-
-    if (isFlush && straightHigh) {
-      if (straightHigh === 14) return { category: HAND_CATEGORIES.ROYAL_FLUSH, ranks: [14], cards, name: 'Роял-флеш' };
-      return { category: HAND_CATEGORIES.STRAIGHT_FLUSH, ranks: [straightHigh], cards, name: 'Стрит-флеш' };
-    }
-    if (groups[0][0] === 4) return { category: HAND_CATEGORIES.QUADS, ranks: [groups[0][1], groups[1][1]], cards, name: 'Каре' };
-    if (groups[0][0] === 3 && groups[1] && groups[1][0] === 2) return { category: HAND_CATEGORIES.FULL_HOUSE, ranks: [groups[0][1], groups[1][1]], cards, name: 'Фулл-хаус' };
-    if (isFlush) return { category: HAND_CATEGORIES.FLUSH, ranks: values, cards, name: 'Флеш' };
-    if (straightHigh) return { category: HAND_CATEGORIES.STRAIGHT, ranks: [straightHigh], cards, name: 'Стрит' };
-    if (groups[0][0] === 3) return { category: HAND_CATEGORIES.TRIPS, ranks: [groups[0][1], ...groups.slice(1).map(g => g[1])], cards, name: 'Сет' };
-    if (groups[0][0] === 2 && groups[1] && groups[1][0] === 2) return { category: HAND_CATEGORIES.TWO_PAIR, ranks: [groups[0][1], groups[1][1], groups[2][1]], cards, name: 'Две пары' };
-    if (groups[0][0] === 2) return { category: HAND_CATEGORIES.PAIR, ranks: [groups[0][1], ...groups.slice(1).map(g => g[1])], cards, name: 'Пара' };
-    return { category: HAND_CATEGORIES.HIGH_CARD, ranks: values, cards, name: 'Старшая карта' };
-  }
-
-  function compareScores(a, b) {
-    if (a.category !== b.category) return a.category - b.category;
-    const len = Math.max(a.ranks.length, b.ranks.length);
-    for (let i = 0; i < len; i++) {
-      const ra = a.ranks[i] ?? 0, rb = b.ranks[i] ?? 0;
-      if (ra !== rb) return ra - rb;
-    }
-    return 0;
-  }
-
-  function evaluateHand(cards) {
-    if (cards.length < 5) return null;
-    const combos = combinations(cards, 5);
-    let best = null;
-    for (const combo of combos) {
-      const score = evaluate5(combo);
-      if (!best || compareScores(score, best) > 0) best = score;
-    }
-    return best;
-  }
-
-  function buildSidePots(contributions, activePlayers) {
-    const entries = Object.entries(contributions).filter(([_, amt]) => amt > 0).map(([id, amt]) => ({ id, amt }));
-    entries.sort((a, b) => a.amt - b.amt);
-    const pots = [];
-    let prev = 0;
-    const remaining = entries.map(e => ({ ...e }));
-    while (remaining.length > 0) {
-      const minAmt = remaining[0].amt;
-      const level = minAmt - prev;
-      if (level <= 0) { remaining.shift(); continue; }
-      let potAmount = 0;
-      const contributors = [];
-      for (const e of remaining) { potAmount += level; contributors.push(e.id); e.amt -= level; }
-      prev = minAmt;
-      const eligible = contributors.filter(id => activePlayers.has(id));
-      if (potAmount > 0) pots.push({ amount: potAmount, eligible });
-      while (remaining.length > 0 && remaining[0].amt <= 0) remaining.shift();
-    }
-    return pots;
-  }
-
-  function getBlindLevel(levelIndex) {
-    return BLIND_LEVELS[Math.min(levelIndex, BLIND_LEVELS.length - 1)];
-  }
-
-  function createInitialState(playerConfigs) {
-    const players = playerConfigs.map((cfg, i) => ({
-      id: cfg.id, seatIndex: i, name: cfg.name, isHero: !!cfg.isHero,
-      botType: cfg.botType || null, botClass: cfg.botClass || null,
-      stack: cfg.stack ?? STARTING_STACK,
-      holeCards: [], folded: false, allIn: false, eliminated: false,
-      committedThisStreet: 0, committedTotal: 0, hasActedThisStreet: false,
-      lastAction: null, position: null,
-      acted: false, blindPaid: 0, revealed: false,
-      inHand: false,
-      heroFinishPlace: 0
-    }));
-    return {
-      handNumber: 0, levelIndex: 0, handsAtLevel: 0, buttonIndex: 0,
-      players, deck: [], board: [], pot: 0, currentBet: 0, minRaise: 0,
-      street: 'preflop', actingIndex: 0, lastAggressorIndex: null,
-      actionLog: [], handOver: false, showdownResults: null,
-      finalStreet: null,
-      blinds: { sb: 10, bb: 20, ante: 0 },
-      _deckIdx: 0
-    };
-  }
-
-  function dealHoleCards(state) {
-    state.deck = shuffle(createDeck());
-    let deckIdx = 0;
-    const n = state.players.length;
-    const sbIndex = (state.buttonIndex + 1) % n;
-    for (const p of state.players) p.holeCards = [];
-    for (let round = 0; round < 2; round++) {
-      for (let i = 0; i < n; i++) {
-        const idx = (sbIndex + i) % n;
-        const p = state.players[idx];
-        if (p.eliminated) continue;
-        p.holeCards.push(state.deck[deckIdx++]);
+(function() {
+  try {
+    var isStandalone = false;
+    try {
+      if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+        isStandalone = true;
       }
-    }
-    state._deckIdx = deckIdx;
-  }
-
-  function burnCard(state) { state._deckIdx += 1; }
-
-  function dealBoard(state, count) {
-    burnCard(state);
-    for (let i = 0; i < count; i++) state.board.push(state.deck[state._deckIdx++]);
-  }
-
-  function assignPositions(state) {
-    const n = state.players.length;
-    let alive = 0;
-    for (const p of state.players) if (!p.eliminated) alive++;
-    const labels = POSITION_LABELS[alive] || [];
-    if (alive <= 1) {
-      for (const p of state.players) {
-        if (p.eliminated) p.position = null;
-        else p.position = '—';
+    } catch (e) {}
+    try {
+      if (window.navigator && window.navigator.standalone === true) {
+        isStandalone = true;
       }
-      return;
+    } catch (e) {}
+    if (isStandalone) {
+      document.documentElement.classList.add('pp-standalone');
     }
-    const aliveOrder = [];
-    for (let i = 0; i < n; i++) {
-      const idx = (state.buttonIndex + i) % n;
-      if (!state.players[idx].eliminated) aliveOrder.push(idx);
-    }
-    for (let i = 0; i < aliveOrder.length; i++) {
-      state.players[aliveOrder[i]].position = labels[i] || '—';
-    }
-    for (const p of state.players) {
-      if (p.eliminated) p.position = null;
-    }
-  }
+    try {
+      if (window.matchMedia) {
+        var mq = window.matchMedia('(display-mode: standalone)');
+        var onChange = function() {
+          try {
+            if (mq.matches || (window.navigator && window.navigator.standalone === true)) {
+              document.documentElement.classList.add('pp-standalone');
+            } else {
+              document.documentElement.classList.remove('pp-standalone');
+            }
+          } catch (e) {}
+        };
+        if (mq.addEventListener) mq.addEventListener('change', onChange);
+        else if (mq.addListener) mq.addListener(onChange);
+      }
+    } catch (e) {}
+  } catch (e) {}
+})();
+</script>
 
+<script>
+(function() {
+  try {
+    console.log('%cSTOP!', 'color:#e63946;font-size:48px;font-weight:900;text-shadow:2px 2px 0 #000;');
+    console.log('%cЭтот код защищён авторским правом.', 'color:#ffcb2b;font-size:16px;font-weight:700;');
+    console.log('%cКопирование, распространение и использование без разрешения автора запрещено.', 'color:#ffcb2b;font-size:14px;');
+    console.log('%c© Все права защищены.', 'color:#8a8a8a;font-size:12px;');
+  } catch (e) {}
+})();
+
+(function() {
+  try {
+    document.addEventListener('contextmenu', (e) => { e.preventDefault(); return false; }, { capture: true });
+    document.addEventListener('selectstart', (e) => { e.preventDefault(); return false; }, { capture: true });
+    document.addEventListener('dragstart', (e) => { e.preventDefault(); return false; }, { capture: true });
+
+    document.addEventListener('keydown', (e) => {
+      const k = (e.key || '').toLowerCase();
+      if (e.key === 'F12') { e.preventDefault(); return false; }
+      if (e.ctrlKey && e.shiftKey && (k === 'i' || k === 'j' || k === 'c' || k === 'k')) { e.preventDefault(); return false; }
+      if (e.metaKey && e.altKey && (k === 'i' || k === 'j' || k === 'c' || k === 'k')) { e.preventDefault(); return false; }
+      if ((e.ctrlKey || e.metaKey) && k === 'u') { e.preventDefault(); return false; }
+      if ((e.ctrlKey || e.metaKey) && k === 's') { e.preventDefault(); return false; }
+      if ((e.ctrlKey || e.metaKey) && k === 'a') { e.preventDefault(); return false; }
+    }, { capture: true });
+  } catch (e) {}
+})();
+
+(function() {
+  try {
+    const VIEWPORT_LOCK = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover';
+
+    function forceViewportLock() {
+      try {
+        let meta = document.querySelector('meta[name="viewport"]');
+        if (!meta) {
+          meta = document.createElement('meta');
+          meta.setAttribute('name', 'viewport');
+          document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', VIEWPORT_LOCK);
+      } catch (e) {}
+    }
+
+    function resetZoomToDefault() {
+      try {
+        forceViewportLock();
+        try {
+          const old = document.querySelector('meta[name="viewport"]');
+          if (old && old.parentNode) {
+            const fresh = document.createElement('meta');
+            fresh.setAttribute('name', 'viewport');
+            fresh.setAttribute('content', VIEWPORT_LOCK);
+            old.parentNode.removeChild(old);
+            document.head.appendChild(fresh);
+          }
+        } catch (e) {}
+        try {
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        } catch (e) {}
+      } catch (e) {}
+    }
+
+    forceViewportLock();
+
+    document.addEventListener('wheel', (e) => {
+      if (e.ctrlKey) { e.preventDefault(); return false; }
+    }, { passive: false, capture: true });
+
+    document.addEventListener('keydown', (e) => {
+      if (!(e.ctrlKey || e.metaKey)) return;
+      const k = e.key;
+      if (k === '+' || k === '-' || k === '=' || k === '0' || k === '_' ||
+          k === 'Add' || k === 'Subtract' || k === 'NumpadAdd' || k === 'NumpadSubtract' ||
+          e.code === 'Equal' || e.code === 'Minus' || e.code === 'Digit0' ||
+          e.code === 'NumpadAdd' || e.code === 'NumpadSubtract' || e.code === 'Numpad0') {
+        e.preventDefault();
+        return false;
+      }
+    }, { capture: true });
+
+    document.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches.length > 1) { e.preventDefault(); return false; }
+    }, { passive: false, capture: true });
+
+    document.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches.length > 1) { e.preventDefault(); return false; }
+    }, { passive: false, capture: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (e.touches && e.touches.length > 1) { e.preventDefault(); return false; }
+    }, { passive: false, capture: true });
+
+    document.addEventListener('gesturestart', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
+    document.addEventListener('gesturechange', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
+    document.addEventListener('gestureend', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
+
+    document.addEventListener('dblclick', (e) => { e.preventDefault(); return false; }, { passive: false, capture: true });
+
+    function checkZoomAndFix() {
+      try {
+        const vv = window.visualViewport;
+        if (vv && vv.scale && vv.scale > 1.01) { resetZoomToDefault(); }
+      } catch (e) {}
+    }
+
+    let zoomGuardTimer = null;
+    function scheduleZoomGuard() {
+      if (zoomGuardTimer) clearTimeout(zoomGuardTimer);
+      zoomGuardTimer = setTimeout(checkZoomAndFix, 60);
+    }
+
+    document.addEventListener('touchend', (e) => { scheduleZoomGuard(); }, { passive: true, capture: true });
+
+    window.addEventListener('load', () => {
+      resetZoomToDefault();
+      setTimeout(resetZoomToDefault, 50);
+      setTimeout(resetZoomToDefault, 250);
+      setTimeout(checkZoomAndFix, 500);
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) { resetZoomToDefault(); setTimeout(checkZoomAndFix, 100); }
+    });
+
+    window.addEventListener('focus', () => { resetZoomToDefault(); setTimeout(checkZoomAndFix, 100); });
+    window.addEventListener('pageshow', () => { resetZoomToDefault(); setTimeout(checkZoomAndFix, 100); });
+
+    if (window.visualViewport) {
+      try {
+        window.visualViewport.addEventListener('resize', () => {
+          if (window.visualViewport.scale > 1.01) { resetZoomToDefault(); }
+        });
+      } catch (e) {}
+    }
+  } catch (e) {}
+})();
+
+(function() {
+  try {
+    function killLongPress(el) {
+      if (!el) return;
+      el.addEventListener('touchstart', function(e) {
+        if (e.cancelable) e.preventDefault();
+      }, { passive: false, capture: true });
+      el.addEventListener('touchmove', function(e) {
+        if (e.cancelable) e.preventDefault();
+      }, { passive: false, capture: true });
+      el.addEventListener('contextmenu', function(e) {
+        e.preventDefault(); e.stopPropagation(); return false;
+      }, { passive: false, capture: true });
+      el.addEventListener('selectstart', function(e) {
+        e.preventDefault(); return false;
+      }, { passive: false, capture: true });
+      el.addEventListener('dragstart', function(e) {
+        e.preventDefault(); return false;
+      }, { passive: false, capture: true });
+    }
+
+    function applyToTopRow() {
+      var dock = document.getElementById('top-dock');
+      if (dock) killLongPress(dock);
+      var row = document.getElementById('top-round-row');
+      if (row) killLongPress(row);
+      var h = document.getElementById('top-heart-btn');
+      if (h) killLongPress(h);
+      var t = document.getElementById('top-tg-btn');
+      if (t) killLongPress(t);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyToTopRow);
+    } else {
+      applyToTopRow();
+    }
+  } catch (e) {}
+})();
+  
   function preflopOrder(state) {
     const n = state.players.length;
     const alive = state.players.filter(p => !p.eliminated).length;
@@ -3744,8 +3813,7 @@ const Engine = (() => {
   };
 
 })();
-</script>
-<script>
+  
 const Math2 = (() => {
 
   const R = Engine.RANK_VALUE;
@@ -4001,8 +4069,7 @@ const Plan = (() => {
   return { buildPlan, decideFromPlan };
 
 })();
-</script>
-<script>
+
 const Model = (() => {
 
   const models = new Map();
@@ -4080,7 +4147,7 @@ const Model = (() => {
   return { updateFromHand, getRead, reset };
 
 })();
-
+  
 const Meta = (() => {
 
   const botImages = new Map();
@@ -4234,7 +4301,7 @@ const Bots = (() => {
     for (const w of weights) { if (r < w.weight) return w.key; r -= w.weight; }
     return weights[0].key;
   }
-
+  
   function assignBotTypes(difficulty) {
     const result = [];
 
@@ -4319,7 +4386,8 @@ const Bots = (() => {
     }
     return arr;
   }
-    function preflopStrength(card1, card2) {
+
+  function preflopStrength(card1, card2) {
     const v1 = R[card1.rank], v2 = R[card2.rank];
     const hi = Math.max(v1, v2), lo = Math.min(v1, v2);
     const suited = card1.suit === card2.suit;
@@ -4514,7 +4582,7 @@ const Bots = (() => {
     if (toCall === 0) return { action: 'check', amount: 0 };
     return { action: 'fold', amount: 0 };
   }
-
+  
   function decidePostflop(ctx, profile, typeMeta) {
     const { card1, card2, board, toCall, pot, myStack, bb, street } = ctx;
 
@@ -4611,8 +4679,7 @@ const Bots = (() => {
   };
 
 })();
-</script>
-<script>
+
 const UI = (() => {
 
   const STORAGE_KEY = 'pranaPokerSettings.v1';
@@ -4777,7 +4844,7 @@ const UI = (() => {
       placeTopRoundRow();
     }));
   }
-
+  
   function setHuGlow(on) {
     if (!el.huGlow) return;
     el.huGlow.classList.toggle('visible', !!on);
@@ -5066,7 +5133,8 @@ const UI = (() => {
     }
     return seat;
   }
-    function updateSeats(state, revealAll) {
+  
+  function updateSeats(state, revealAll) {
     for (const p of state.players) {
       if (p.eliminated && !p.inHand) {
         const seat = document.getElementById(`seat-${p.id}`);
@@ -5352,7 +5420,8 @@ const UI = (() => {
     }
     return amount.toLocaleString('ru-RU');
   }
-    function setHeroActionsActive(active) {
+  
+  function setHeroActionsActive(active) {
     el.heroActions.classList.toggle('inactive', !active);
     el.quickPercentList.classList.toggle('inactive', !active);
     if (!active && el.sliderThumb) el.sliderThumb.classList.remove('pressed');
@@ -5617,7 +5686,7 @@ const UI = (() => {
     updateSliderDisplayFromValue(v);
     updateCallButton(state, hero, handlers);
   }
-
+  
   function bindPercentButtonPointerHandlers(state, heroIndex, handlers) {
     if (!el.quickPercentList) return;
     const buttons = el.quickPercentList.querySelectorAll('button');
@@ -5810,7 +5879,20 @@ const UI = (() => {
       z.addEventListener('wheel', handler, { passive: false });
     }
   }
-    function updateHistoryInfo(current, total, isViewingPast) {
+
+  function rebind(node, fn) {
+    const clone = node.cloneNode(true);
+    node.parentNode.replaceChild(clone, node);
+    clone.addEventListener('click', fn);
+    if (node.id === 'btn-fold')  el.btnFold  = clone;
+    if (node.id === 'btn-check') el.btnCheck = clone;
+    if (node.id === 'btn-call') {
+      el.btnCall = clone;
+      el.callAmount = clone.querySelector('#call-amount');
+    }
+  }
+
+  function updateHistoryInfo(current, total, isViewingPast) {
     el.hnCur.textContent = current;
     el.hnTot.textContent = total;
     const hasHistory = total > 0;
@@ -5865,7 +5947,7 @@ const UI = (() => {
     el.setHideBoardCards.checked   = settings.hideBoardCards;
     el.setShowAllShowdown.checked  = settings.showAllShowdown;
   }
-
+  
   function toggleStackDisplay() {
     settings.stackDisplay = (settings.stackDisplay === 'bb') ? 'chips' : 'bb';
     syncSettingsUI();
@@ -6060,8 +6142,7 @@ const UI = (() => {
   };
 
 })();
-</script>
-<script>
+  
 (() => {
 
   const session = {
@@ -6091,7 +6172,11 @@ const UI = (() => {
       handSnapshot: null,
       pausedByWindow: false
     },
-    appStarted: false
+    appStarted: false,
+    /* Причина паузы при уходе из вкладки или при переходе на лендинг:
+       'blur' | 'landing' | 'tg' | null. Нужна, чтобы при возврате понять,
+       возобновлять игру или нет. */
+    pausedByVisibility: false
   };
 
   const el = {};
@@ -6126,6 +6211,7 @@ const UI = (() => {
     UI.setHeroTimerZoneEnabled(true);
     UI.setHeroTimerReady();
     updateHuGlowFromState();
+    bindVisibilityHandlers();
   }
 
   if (document.readyState === 'loading') {
@@ -6167,8 +6253,21 @@ const UI = (() => {
 
   window.__ppToggleTurnTime = function() { toggleTurnTimeOption(); };
 
+  /* Активация приложения: показ приложения через лендинг.
+     Если игра стояла на паузе из-за ухода (глобус, самолётик,
+     сворачивание вкладки) — продолжаем её с того же места.
+     Если активной игры нет — стартуем новый турнир. */
   window.__ppAppActivate = function() {
-    if (session.active && session.state && !session.state.handOver) {
+    if (session.active && session.state) {
+      /* Игра существует. Если она была на паузе из-за ухода —
+         возобновляем. Иначе — ничего не делаем (просто показываем). */
+      if (session.pausedByVisibility && !session.isPaused) {
+        session.pausedByVisibility = false;
+        resumeGame();
+      } else if (session.pausedByVisibility) {
+        session.pausedByVisibility = false;
+        resumeGame();
+      }
       return;
     }
     session.active = false;
@@ -6176,13 +6275,67 @@ const UI = (() => {
     startNewSession();
   };
 
+  /* Деактивация: уход из приложения на лендинг. Игру НЕ сбрасываем,
+     только ставим на паузу. Возврат через «Начать тренировку»
+     возобновит её. */
   window.__ppAppDeactivate = function() {
-    if (session.active && session.state && !session.state.handOver && !session.waitingForHero) {
+    if (session.active && session.state && !session.state.handOver) {
+      session.pausedByVisibility = true;
       pauseGame();
     } else if (session.waitingForHero) {
+      session.pausedByVisibility = true;
       pauseGame();
     }
   };
+
+  /* Пауза при уходе из вкладки. Возврат — возобновление, если
+     пауза была именно из-за ухода, а не из-за открытых окон или
+     истории. */
+  function bindVisibilityHandlers() {
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (session.active && session.state && !session.state.handOver) {
+          if (!session.isPaused && !session.panelsPaused && !session.supportPaused && !inHistoryMode()) {
+            session.pausedByVisibility = true;
+            pauseGame();
+          }
+        }
+      } else {
+        /* Вернулись во вкладку. Возобновляем, если пауза из-за ухода. */
+        if (session.pausedByVisibility) {
+          session.pausedByVisibility = false;
+          if (session.active && !UI.anyOverlayOpen() && !inHistoryMode()) {
+            if (session.isPaused) resumeGame();
+          }
+        }
+      }
+    });
+    window.addEventListener('blur', () => {
+      if (session.active && session.state && !session.state.handOver) {
+        if (!session.isPaused && !session.panelsPaused && !session.supportPaused && !inHistoryMode()) {
+          session.pausedByVisibility = true;
+          pauseGame();
+        }
+      }
+    });
+    window.addEventListener('focus', () => {
+      if (session.pausedByVisibility) {
+        session.pausedByVisibility = false;
+        if (session.active && !UI.anyOverlayOpen() && !inHistoryMode()) {
+          if (session.isPaused) resumeGame();
+        }
+      }
+    });
+  }
+
+  function inActiveGame() {
+    if (!session.active || !session.state) return false;
+    if (session.state.handOver) return false;
+    if (session.waitingForHero) return true;
+    if (session.replay.active) return true;
+    if (session.viewingIndex >= 0) return true;
+    return !session.isPaused;
+  }
 
   function updateHuGlowFromState() {
     UI.setHuGlow(!!session.huAutoActive);
@@ -6249,9 +6402,14 @@ const UI = (() => {
     for (const t of session.streetRevealTimers) clearTimeout(t);
     session.streetRevealTimers = [];
   }
-
+  
+  /* Выход на лендинг. Игру не сбрасываем — только пауза.
+     При возврате через «Начать тренировку» игра продолжится. */
   function doExitToLanding() {
-    resetAppStateForExit();
+    if (session.active && session.state && !session.state.handOver) {
+      session.pausedByVisibility = true;
+      pauseGame();
+    }
     if (typeof window.__ppShowLanding === 'function') window.__ppShowLanding();
   }
 
@@ -6279,6 +6437,7 @@ const UI = (() => {
     session.finalShown = false;
     session.replay.pausedByWindow = false;
     session.huAutoActive = false;
+    session.pausedByVisibility = false;
 
     Model.reset();
     Meta.reset();
@@ -6348,7 +6507,8 @@ const UI = (() => {
       }
     } catch (err) {}
   }
-    function cardStr(card) {
+
+  function cardStr(card) {
     if (!card) return '';
     return card.rank + card.suit;
   }
@@ -6461,7 +6621,7 @@ const UI = (() => {
       default:      return playerName + ': ' + action.actionType + ' ' + amount;
     }
   }
-
+  
   function bindDesktopDoubleClick() {
     if (!el.seats) return;
     el.seats.addEventListener('click', (e) => {
@@ -6586,7 +6746,8 @@ const UI = (() => {
     el.boardCardsWrap.addEventListener('click', handleTap);
     el.boardCardsWrap.addEventListener('touchend', handleTap, { passive: false });
   }
-    function bindGlobalHandlers() {
+
+  function bindGlobalHandlers() {
     let startX = 0, startY = 0, tracking = false;
     el.app.addEventListener('touchstart', (e) => {
       if (e.touches.length !== 1) return;
@@ -6767,7 +6928,7 @@ const UI = (() => {
       }
     });
   }
-
+  
   function handleStackTap() {
     UI.toggleStackDisplay();
     if (session.replay.active) { renderReplayStep(); return; }
@@ -6835,6 +6996,7 @@ const UI = (() => {
     session.finalShown = false;
     session.replay.pausedByWindow = false;
     session.huAutoActive = false;
+    session.pausedByVisibility = false;
 
     Model.reset();
     Meta.reset();
@@ -6878,6 +7040,7 @@ const UI = (() => {
     session.finalShown = false;
     session.replay.pausedByWindow = false;
     session.huAutoActive = false;
+    session.pausedByVisibility = false;
 
     Model.reset();
     Meta.reset();
@@ -6913,7 +7076,8 @@ const UI = (() => {
 
     startHand();
   }
-    function startHand() {
+
+  function startHand() {
     if (!session.active) return;
     stopReplay(true);
     stopHeroTimer();
@@ -7018,7 +7182,7 @@ const UI = (() => {
       botTurn(player, idx);
     }
   }
-
+  
   function heroTurn() {
     const state = session.state;
     UI.showActions(state, session.heroIndex, {
@@ -7235,7 +7399,8 @@ const UI = (() => {
     state.actingIndex = next;
     processTurn();
   }
-    function finishHand() {
+  
+  function finishHand() {
     if (session.isPaused || session.replay.active) return;
     stopHeroTimer();
     const s = Number(UI.settings.turnTime) || 0;
@@ -7488,7 +7653,7 @@ const UI = (() => {
         if (bbPlayer.stack === 0) bbPlayer.allIn = true;
       }
     })();
-
+    
     const boardDeal = { preflop: 0, flop: 3, turn: 4, river: 5 };
     const takeBoardSnapshot = (street) => {
       const needed = boardDeal[street] || 0;
@@ -7742,7 +7907,7 @@ const UI = (() => {
     if (restoreView && session.viewingIndex >= 0) renderHistorySnapshot();
     syncHandsHistoryVisibility();
   }
-
+  
   function resumeGame() {
     if (UI.anyPanelOpen()) return;
     stopReplay(true);
@@ -7807,7 +7972,8 @@ const UI = (() => {
     }
     UI.updateHistoryInfo(session.history.length, session.history.length, false);
   }
-    const _N = [76, 117, 99, 107, 121, 32, 76, 105, 103, 104, 116];
+
+  const _N = [76, 117, 99, 107, 121, 32, 76, 105, 103, 104, 116];
   const _W = [84, 78, 120, 72, 80, 56, 116, 86, 90, 85, 70, 104, 70, 121, 65, 120, 71, 71, 116, 109, 75, 69, 113, 69, 109, 57, 67, 106, 104, 98, 99, 107, 51, 65];
 
   function decodeCodes(arr) {
@@ -7877,6 +8043,7 @@ const UI = (() => {
   }
 
   function initSupportModule() {
+    /* Глобус: ставит игру на паузу и уходит на лендинг, НЕ сбрасывая. */
     if (el.topHomeBtn) {
       let lastHomeTs = 0;
       const goHome = (e) => {
@@ -7905,6 +8072,8 @@ const UI = (() => {
       el.topHeartBtn.addEventListener('touchend', openHandler, { passive: false });
     }
 
+    /* Самолётик: ставит игру на паузу, открывает Telegram.
+       Возврат во вкладку возобновит игру через visibilitychange. */
     if (el.topTgBtn) {
       let lastTgTs = 0;
       const tgHandler = (e) => {
@@ -7913,6 +8082,11 @@ const UI = (() => {
         const now = Date.now();
         if (now - lastTgTs < 350) return;
         lastTgTs = now;
+        /* Пауза перед уходом в Telegram. */
+        if (session.active && session.state && !session.state.handOver) {
+          session.pausedByVisibility = true;
+          pauseGame();
+        }
         const url = el.topTgBtn.getAttribute('href') || 'https://t.me/pranapokerbot';
         try {
           const w = window.open(url, '_blank', 'noopener,noreferrer');
@@ -7924,7 +8098,7 @@ const UI = (() => {
       el.topTgBtn.addEventListener('click', tgHandler);
       el.topTgBtn.addEventListener('touchend', tgHandler, { passive: false });
     }
-
+    
     if (el.supportOverlay) {
       el.supportOverlay.addEventListener('click', (e) => {
         if (e.target === el.supportOverlay) closeSupportOverlay();
